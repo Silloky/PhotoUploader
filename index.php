@@ -4,12 +4,13 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-if (isset($_SESSION['connected'])){
+if (!(array_key_exists('connected',$_SESSION))){
+    header('Location: ./login');
+} else {
     if (!($_SESSION['connected'])){
         header('Location: ./login');
     }
 }
-
 
 
 ?>
