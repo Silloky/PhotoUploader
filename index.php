@@ -26,9 +26,30 @@ if (!(array_key_exists('connected',$_SESSION))){
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Hello world</h1>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <main>
+        <div id="sidebar">
+            <div id="photos">
+
+            </div>
+            <div id="controls">
+
+            </div>
+        </div>
+        <div id="editor-panel">
+            <img src="" alt="preview">
+            <div id="fields">
+
+                <div id="map">
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="bottom-bar">
+
+    </div>
 </body>
 </html>
