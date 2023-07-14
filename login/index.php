@@ -1,3 +1,36 @@
+<?php
+
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
+
+if (isset($_POST)){
+    if (isset($_POST['action'])){
+        if ($_POST['action'] == 'signin'){
+            $username = $_POST['user'];
+            $pwd = $_POST['pwd'];
+
+            require('../dbconfig.php');
+            $sql = "SELECT * FROM users WHERE username='$username'";
+            $result = mysqli_query($conn,$sql);
+            $hash = (mysqli_fetch_assoc($result))['pwd'];
+            if (password_verify($pwd, $hash)){
+                $_SESSION['connected'] = true;
+                $_SESSION['username'] = $username;
+                header('Location: ../');
+            } else {
+                echo 'no';
+            }
+        }
+    }
+}
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +59,7 @@
                     <input type="text" name="pwd" placeholder="Password">
                 </div>
             </div>
-            <button type="submit">Sign in</button>
+            <button type="submit" value="signin" name="action">Sign in</button>
         </form>
     </main>
 
