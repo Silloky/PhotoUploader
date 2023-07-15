@@ -34,6 +34,9 @@ body {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 10fr 1fr;
+
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .material-symbols-rounded {
@@ -43,14 +46,55 @@ body {
     'GRAD' 200
 }
 
+.scrollbarhidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbarhidden::-webkit-scrollbar {
+    display: none;
+}
+
 #sidebar {
     display: grid;
     grid-template-rows: 3fr 1fr;
     border-right: #f8f9fa 2px solid;
+    min-width: 0;
+    min-height: 0;
 }
 
 #photos {
-    
+    margin: 0;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+#photos > span {
+    display: block;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 24px;
+}
+
+.photoblock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 25px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.photoblock:hover {
+    background-color: var(--hover-color);
+    transition: background-color 1s;
+    cursor: pointer;
+}
+
+.photoblock img {
+    width: 100%;
+    border-radius: 12px;
+    grid-row: 1/-1;
 }
 
 #controls {
