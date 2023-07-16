@@ -1,6 +1,6 @@
 function addPhotoBlock(file){
     var url = URL.createObjectURL(file)
-    var date = file.lastModifiedDate.toLocaleDateString()
+    var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'})
     var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     var html = `
     <div class="photoblock">

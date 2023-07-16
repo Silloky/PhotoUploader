@@ -83,6 +83,8 @@ body {
     column-gap: 25px;
     padding: 15px;
     border-radius: 12px;
+    min-height: 0;
+    min-width: 0;
 }
 
 .photoblock:hover {
@@ -95,6 +97,12 @@ body {
     width: 100%;
     border-radius: 12px;
     grid-row: 1/-1;
+}
+
+.photoblock span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #controls {
