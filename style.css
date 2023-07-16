@@ -107,6 +107,8 @@ body {
     grid-template-rows: 1fr 1fr;
     column-gap: 25px;
     padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border-radius: 12px;
     min-height: 0;
     min-width: 0;
