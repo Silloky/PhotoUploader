@@ -33,11 +33,13 @@ $rand = random_int(1,10000)
 <body>
     <div id="sidebar">
         <div id="photos" class="scrollbarhidden">
-            <span id="photo-panel-big">Photos</span>
-            <div class="photoblock">
-                <img src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVydGljYWx8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="">
-                <span>testphotovertical.png</span>
-                <span>19/06/2023 14:06</span>
+            <span id="photo-panel-big" >Photos</span>
+            <div id="dnd">
+                <span class="material-symbols-rounded" id="dndicon">place_item</span>
+                <span>Drag and Drop files here</span>
+                <span id="dndor">or</span>
+                <span>Click on 'Add photo(s)' below</span>
+            </span>
             </div>
         </div>
         <ul id="controls">

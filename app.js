@@ -20,6 +20,10 @@ function addPhotoBlock(file){
 let photos = Array()
 var photosBar = $("#photos")
 
+$("#photo-panel-big").hide();
+
+
+
 $("#filebrowser")[0].onchange = evt => {
     var justImportedPhotos = Array.from($("#filebrowser")[0].files)
     justImportedPhotos.forEach(file => {
