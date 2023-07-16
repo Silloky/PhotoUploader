@@ -32,7 +32,7 @@ body {
     color: var(--text-color);
 
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 3fr;
     grid-template-rows: 10fr 1fr;
 
     min-width: 100%;
@@ -74,6 +74,7 @@ body {
     text-align: center;
     text-decoration: underline;
     font-size: 24px;
+    padding-bottom: 10px;
 }
 
 #dnd {
