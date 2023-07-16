@@ -13,9 +13,20 @@ function addPhotoBlock(file){
     $("#dnd").hide()
     $("#photo-panel-big").show()
     if (selectorRunning == false){
-        $("#photos").multiSelector({selector: ".photoblock", selectedElementClass: "selected"})
+        $("#photos").multiSelector({
+            selector: ".photoblock", 
+            selectedElementClass: "selected",
+            onSelectionEnd: function(list) {
+                refreshEditor(list)
+            }
+        })
         selectorRunning = true
     }
+}
+
+function refreshEditor(list) {
+    alert('Hello !')
+    console.log(list)
 }
 
 function removeSelectedPhotos() {

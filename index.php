@@ -36,7 +36,7 @@ $rand = random_int(1,10000)
         <div id="photos" class="scrollbarhidden">
             <span id="photo-panel-big" >Photos</span>
             <div id="dnd">
-                <span class="material-symbols-rounded" id="dndicon">place_item</span>
+                <span class="material-symbols-rounded bigicon">place_item</span>
                 <span>Drag and Drop files here</span>
                 <span id="dndor">or</span>
                 <span>Click on 'Add photo(s)' below</span>
@@ -60,6 +60,11 @@ $rand = random_int(1,10000)
         </ul>
     </div>
     <div id="editor-panel">
+        <div id="editor-null">
+            <span class="material-symbols-rounded bigicon">west</span>
+            <span>Select photo(s) from opposite list</span>
+            <span>to get started</span>
+        </div>
         <!-- <img src="" alt="preview"> -->
         <div id="fields">
 
