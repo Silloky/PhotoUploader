@@ -26,6 +26,13 @@ function removeSelectedPhotos() {
             return obj.name !== $(this).children().eq(1).text()
         })
     })
+    if (photos.length == 0){
+        $("#dnd").show()
+        $("#photo-panel-big").hide()
+        if (selectorRunning == false){
+            $("#photos").multiSelector('unbind')
+        }
+    }
 }
 
 // $(window).on('load',function() {
