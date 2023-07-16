@@ -12,6 +12,9 @@ function addPhotoBlock(file){
     photosBar.append(html)
     $("#dnd").hide()
     $("#photo-panel-big").show()
+    if (selectorRunning == false){
+        $("#photos").multiSelector({selector: ".photoblock", selectedElementClass: "selected"})
+    }
 }
 
 // $(window).on('load',function() {
@@ -20,6 +23,7 @@ function addPhotoBlock(file){
 
 let photos = Array()
 var photosBar = $("#photos")
+var selectorRunning = false
 
 $("#photo-panel-big").hide();
 

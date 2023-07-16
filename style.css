@@ -37,6 +37,8 @@ body {
 
     min-width: 100%;
     min-height: 100%;
+
+    user-select: none;
 }
 
 .material-symbols-rounded {
@@ -114,6 +116,10 @@ body {
     background-color: var(--hover-color);
     transition: background-color 1s;
     cursor: pointer;
+}
+
+.photoblock.selected {
+    background-color: var(--hover-color);
 }
 
 .photoblock img {
