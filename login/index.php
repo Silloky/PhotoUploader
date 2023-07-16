@@ -19,7 +19,7 @@ if (isset($_POST)){
                 $_SESSION['username'] = $username;
                 header('Location: ../');
             } else {
-                echo 'no';
+                echo 'ur a bloody gay';
             }
         }
     }
@@ -56,7 +56,7 @@ if (isset($_POST)){
                     <input type="text" name="user" placeholder="Username">
                 </div>
                 <div class="field">
-                    <input type="text" name="pwd" placeholder="Password">
+                    <input type="password" name="pwd" placeholder="Password">
                 </div>
             </div>
             <button type="submit" value="signin" name="action">Sign in</button>
