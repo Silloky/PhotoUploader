@@ -14,7 +14,18 @@ function addPhotoBlock(file){
     $("#photo-panel-big").show()
     if (selectorRunning == false){
         $("#photos").multiSelector({selector: ".photoblock", selectedElementClass: "selected"})
+        selectorRunning = true
     }
+}
+
+function removeSelectedPhotos() {
+    const currentlySelected = $("#photos").multiSelector('get')
+    currentlySelected.each(function() {
+        $(this).remove()
+        photos = photos.filter(obj => {
+            return obj.name !== $(this).children().eq(1).text()
+        })
+    })
 }
 
 // $(window).on('load',function() {

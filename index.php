@@ -49,7 +49,7 @@ $rand = random_int(1,10000)
                 <span class="material-symbols-rounded">add_photo_alternate</span>
                 <span>Add photo(s)</span>
             </li>
-            <li class="control">
+            <li class="control" onclick="removeSelectedPhotos()">
                 <span class="material-symbols-rounded">delete_forever</span>
                 <span>Remove selected photo(s)</span>
             </li>
