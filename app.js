@@ -10,7 +10,8 @@ function addPhotoBlock(file){
     </div>
     `
     photosBar.append(html)
-
+    $("#dnd").hide()
+    $("#photo-panel-big").show()
 }
 
 // $(window).on('load',function() {
@@ -22,7 +23,18 @@ var photosBar = $("#photos")
 
 $("#photo-panel-big").hide();
 
+$("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+});
 
+$("#dnd").on('drop', function (e) {
+    var justImportedPhotos = Array.from(e.originalEvent.dataTransfer.files)
+    justImportedPhotos.forEach(file => {
+        photos.push(file)
+        addPhotoBlock(file)
+    })
+});
 
 $("#filebrowser")[0].onchange = evt => {
     var justImportedPhotos = Array.from($("#filebrowser")[0].files)
