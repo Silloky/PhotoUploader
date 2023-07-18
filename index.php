@@ -34,7 +34,7 @@ $rand = random_int(1,10000)
 <body>
     <div id="sidebar">
         <div id="photos" class="scrollbarhidden">
-            <span id="photo-panel-big" >Photos</span>
+            <span class="big-text" style="display: none;">Photos</span>
             <div id="dnd">
                 <span class="material-symbols-rounded bigicon">place_item</span>
                 <span>Drag and Drop files here</span>
@@ -66,9 +66,16 @@ $rand = random_int(1,10000)
             <span>to get started</span>
         </div>
         <!-- <img src="" alt="preview"> -->
-        <div id="fields">
-
-            <div id="map">
+        <div id="real-editor" style="display: none;">
+            <div id="fields" class="scrollbarhidden">
+                <span>caca</span>
+                
+                <div id="map">
+                    
+                </div>
+            </div>
+            <div id="preview" class="scrollbarhidden">
+                <span class="big-text">Currently editing</span>
 
             </div>
         </div>

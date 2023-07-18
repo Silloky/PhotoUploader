@@ -11,7 +11,7 @@ function addPhotoBlock(file){
     `
     photosBar.append(html)
     $("#dnd").hide()
-    $("#photo-panel-big").show()
+    $(".big-text").show()
     if (selectorRunning == false){
         $("#photos").multiSelector({
             selector: ".photoblock", 
@@ -25,8 +25,13 @@ function addPhotoBlock(file){
 }
 
 function refreshEditor(list) {
-    alert('Hello !')
-    console.log(list)
+    if (nullEditor){
+        $("#editor-null").hide()
+        $("#real-editor").show()
+        nullEditor = false
+    }
+    currentlyEditing = list
+
 }
 
 function removeSelectedPhotos() {
@@ -39,7 +44,7 @@ function removeSelectedPhotos() {
     })
     if (photos.length == 0){
         $("#dnd").show()
-        $("#photo-panel-big").hide()
+        $(".big-text").hide()
         if (selectorRunning == false){
             $("#photos").multiSelector('unbind')
         }
@@ -53,6 +58,7 @@ function removeSelectedPhotos() {
 let photos = Array()
 var photosBar = $("#photos")
 var selectorRunning = false
+var nullEditor = true
 
 $("#photo-panel-big").hide();
 
