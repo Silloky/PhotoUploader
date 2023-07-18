@@ -30,8 +30,18 @@ function refreshEditor(list) {
         $("#real-editor").show()
         nullEditor = false
     }
-    currentlyEditing = list
-
+    $("#preview").children("img").remove()
+    var currentlyEditingBlocks = list
+    var currentlyEditing = Array()
+    currentlyEditingBlocks.each(function() {
+        var current = photos.find(photo => photo.name === $(this).children('span').eq(0).text())
+        current.jqueryObj = $(this)
+        currentlyEditing.push(current)
+        // console.log(currentlyEditing)
+        var html = `<img src="${URL.createObjectURL(current)}" alt="${current.name}">`
+        // console.log(html)
+        $("#preview").append(html)
+    })
 }
 
 function removeSelectedPhotos() {
