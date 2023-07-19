@@ -1,9 +1,11 @@
 function addPhotoBlock(file){
+    var uuid = crypto.randomUUID()
+    file.uuid = uuid
     var url = URL.createObjectURL(file)
     var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'})
     var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     var html = `
-    <div class="photoblock">
+    <div class="photoblock" uuid="${uuid}">
             <img src="${url}" alt="">
             <span>${file.name}</span>
             <span>${date} ${time}</span>
@@ -34,7 +36,7 @@ function refreshEditor(list) {
     var currentlyEditingBlocks = list
     var currentlyEditing = Array()
     currentlyEditingBlocks.each(function() {
-        var current = photos.find(photo => photo.name === $(this).children('span').eq(0).text())
+        var current = photos.find(photo => photo.uuid === $(this).attr('uuid'))
         current.jqueryObj = $(this)
         currentlyEditing.push(current)
         // console.log(currentlyEditing)
@@ -49,7 +51,7 @@ function removeSelectedPhotos() {
     currentlySelected.each(function() {
         $(this).remove()
         photos = photos.filter(obj => {
-            return obj.name !== $(this).children().eq(1).text()
+            return obj.uuid !== $(this).attr('uuid')
         })
     })
     if (photos.length == 0){
