@@ -1,7 +1,7 @@
 function addPhotoBlock(file){
     var uuid = crypto.randomUUID()
     file.uuid = uuid
-    var url = URL.createObjectURL(file)
+    var url = URL.createObjectURL(file.fileObject)
     var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'})
     var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     var html = `
@@ -37,12 +37,12 @@ function refreshEditor(list) {
     var currentlyEditing = Array()
     currentlyEditingBlocks.each(function() {
         var current = photos.find(photo => photo.uuid === $(this).attr('uuid'))
-        current.jqueryObj = $(this)
+        current.availableListObj = $(this)
         currentlyEditing.push(current)
         // console.log(currentlyEditing)
-        var html = `<img src="${URL.createObjectURL(current)}" alt="${current.name}">`
+        var html = `<img src="${URL.createObjectURL(current.fileObject)}" alt="${current.name}" uuid=${current.uuid}>`
         // console.log(html)
-        $("#preview").append(html)
+        current.editingListObj = $("#preview").append(html).children(":last-child")
     })
 }
 
@@ -60,6 +60,17 @@ function removeSelectedPhotos() {
         if (selectorRunning == false){
             $("#photos").multiSelector('unbind')
         }
+    }
+}
+
+function convertFileToObject(file) {
+    return {
+        'lastModified'  :   file.lastModified,
+        'lastModifiedDate'  :   file.lastModifiedDate,
+        'name'  :   file.name,
+        'size'  :   file.size,
+        'type'  :   file.type,
+        'fileObject'    :   file
     }
 }
 
@@ -82,15 +93,17 @@ $("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', functio
 $("#dnd").on('drop', function (e) {
     var justImportedPhotos = Array.from(e.originalEvent.dataTransfer.files)
     justImportedPhotos.forEach(file => {
-        photos.push(file)
-        addPhotoBlock(file)
+        var jsonFile = convertFileToObject(file)
+        photos.push(jsonFile)
+        addPhotoBlock(jsonFile)
     })
 });
 
 $("#filebrowser")[0].onchange = evt => {
     var justImportedPhotos = Array.from($("#filebrowser")[0].files)
     justImportedPhotos.forEach(file => {
-        photos.push(file)
-        addPhotoBlock(file)
+        var jsonFile = convertFileToObject(file)
+        photos.push(jsonFile)
+        addPhotoBlock(jsonFile)
     })
 }
