@@ -12,7 +12,9 @@ if (!(array_key_exists('connected',$_SESSION))){
     }
 }
 
-$rand = random_int(1,10000)
+$rand = random_int(1,10000);
+
+include_once('./api/getStructure.php');
 
 
 ?>
@@ -29,6 +31,7 @@ $rand = random_int(1,10000)
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="multiselector.min.js"></script>
+    <script>var structure = <?= $structure ?>;</script>
     <link rel="stylesheet" href="./style.css?refreshthing=<?= $rand ?>">
 </head>
 <body>
@@ -76,7 +79,7 @@ $rand = random_int(1,10000)
                         <span class="placeholder">File name</span>
                         <p class="error-text"></p>
                     </div>
-                    <ul id="folder-selector" class="ztree">
+                    <ul id="folder-selector">
                         
                     </ul>
                 </div>
