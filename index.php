@@ -25,7 +25,7 @@ $rand = random_int(1,10000)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Photos</title>
     <script src="./app.js?refreshthing=<?= $rand ?>" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="multiselector.min.js"></script>
@@ -34,7 +34,7 @@ $rand = random_int(1,10000)
 <body>
     <div id="sidebar">
         <div id="photos" class="scrollbarhidden">
-            <span class="big-text" style="display: none;">Photos</span>
+            <span class="big-text" style="display: none;">Available Photos</span>
             <div id="dnd">
                 <span class="material-symbols-rounded bigicon">place_item</span>
                 <span>Drag and Drop files here</span>
@@ -68,10 +68,24 @@ $rand = random_int(1,10000)
         <!-- <img src="" alt="preview"> -->
         <div id="real-editor" style="display: none;">
             <div id="fields" class="scrollbarhidden">
-                <span>caca</span>
-                
-                <div id="map">
-                    
+            <span class="big-text">Editor</span>
+                <div id="basic-information" class="editor-category">
+                    <div class="editor-category-titles">Basic Information</div>
+                    <div class="text-field">
+                        <input type="text" name="filename" value="" placeholder=" ">
+                        <span class="placeholder">File name</span>
+                        <p class="error-text"></p>
+                    </div>
+                    <ul id="folder-selector" class="ztree">
+                        
+                    </ul>
+                </div>
+                <div style="height: 20px; visibility: hidden;"></div>
+                <div id="metadata" class="editor-category">
+                    <div class="editor-category-titles">Metadata</div>
+                    <div id="map">
+                        
+                    </div>
                 </div>
             </div>
             <div id="preview" class="scrollbarhidden">
