@@ -262,6 +262,30 @@ body {
     color: white;
 }
 
+#basic-information ul {
+    list-style-type: none;
+}
+
+#folder-selector {
+    margin: 0;
+    padding: 0;
+}
+
+.caret {
+    cursor: pointer;
+}
+
+.caret::marker {
+    font-family: 'Material Symbols Rounded';
+    content: "\e2c7\ ";
+    color: white;
+    display: inline-block;
+}
+
+.nested {
+    display: none;
+}
+
 #preview {
     padding: 15px;
     /* display: flex;
