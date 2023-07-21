@@ -44,6 +44,9 @@ function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child")
     })
+    structure.children.forEach(folder => {
+        initTree(folder,$("#folder-selector"))
+    })
 }
 
 function removeSelectedPhotos() {
@@ -71,6 +74,17 @@ function convertFileToObject(file) {
         'size'  :   file.size,
         'type'  :   file.type,
         'fileObject'    :   file
+    }
+}
+
+
+function initTree(folder,currentParentUl){
+    var currentThing = currentParentUl.append(`<li><span>${folder.name}</span></li>`).children(":last-child")
+    if (folder.children.length != 0){
+        var nextParent = currentThing.append(`<ul></ul>`).children(":last-child")
+        folder.children.forEach(folder => {
+            initTree(folder,nextParent)
+        })
     }
 }
 
