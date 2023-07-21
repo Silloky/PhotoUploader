@@ -17,5 +17,5 @@ $rootDir = '/media';
 
 $structure = json_encode(array('name' => 'root', 'children' => getContents($rootDir)), JSON_PRETTY_PRINT);
 
-// header('Content-Type: application/json');
-// echo $structure;
+header('Content-Type: application/json');
+echo $structure;

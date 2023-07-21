@@ -1,3 +1,5 @@
+/// <reference path="./lib/jquery.js" />
+
 function addPhotoBlock(file){
     var uuid = crypto.randomUUID()
     file.uuid = uuid
@@ -26,6 +28,7 @@ function addPhotoBlock(file){
     }
 }
 
+
 function refreshEditor(list) {
     if (nullEditor){
         $("#editor-null").hide()
@@ -33,6 +36,7 @@ function refreshEditor(list) {
         nullEditor = false
     }
     $("#preview").children("img").remove()
+    $("#folder-selector").children().remove()
     var currentlyEditingBlocks = list
     var currentlyEditing = Array()
     currentlyEditingBlocks.each(function() {
@@ -44,9 +48,7 @@ function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child")
     })
-    structure.children.forEach(folder => {
-        initTree(folder,$("#folder-selector"))
-    })
+    initTree()
 }
 
 function removeSelectedPhotos() {
@@ -77,13 +79,25 @@ function convertFileToObject(file) {
     }
 }
 
+function initTree() {
+    $.ajax({
+        url: "./api/getStructure.php",
+        type: 'GET',
+        dataType: 'json',
+        success: function(structure){
+            structure.children.forEach(folder => {
+                initTreeFolderChildren(folder,$("#folder-selector"))
+            })
+        }
+    })
+}
 
-function initTree(folder,currentParentUl){
+function initTreeFolderChildren(folder,currentParentUl){
     var currentThing = currentParentUl.append(`<li><span>${folder.name}</span></li>`).children(":last-child")
     if (folder.children.length != 0){
         var nextParent = currentThing.append(`<ul></ul>`).children(":last-child")
         folder.children.forEach(folder => {
-            initTree(folder,nextParent)
+            initTreeFolderChildren(folder,nextParent)
         })
     }
 }
