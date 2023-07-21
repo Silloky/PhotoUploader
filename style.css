@@ -271,11 +271,11 @@ body {
     padding: 0;
 }
 
-.caret {
+.icon {
     cursor: pointer;
 }
 
-.caret::marker {
+.icon::marker {
     font-family: 'Material Symbols Rounded';
     content: "\e2c7\ ";
     color: white;

@@ -95,7 +95,9 @@ function initTree() {
 function initTreeFolderChildren(folder,currentParentUl){
     var currentThing = currentParentUl.append(`<li><span>${folder.name}</span></li>`).children(":last-child")
     if (folder.children.length != 0){
-        var nextParent = currentThing.append(`<ul></ul>`).children(":last-child")
+        currentThing.addClass('icon')
+        // currentThing.addClass('material-symbols-rounded')
+        var nextParent = currentThing.append(`<ul class="nested"></ul>`).children(":last-child")
         folder.children.forEach(folder => {
             initTreeFolderChildren(folder,nextParent)
         })
