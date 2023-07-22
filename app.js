@@ -29,7 +29,7 @@ function addPhotoBlock(file){
 }
 
 
-function refreshEditor(list) {
+async function refreshEditor(list) {
     if (nullEditor){
         $("#editor-null").hide()
         $("#real-editor").show()
@@ -48,7 +48,11 @@ function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child")
     })
-    initTree()
+    await initTree()
+    $("#folder-selector li.icon").on('dblclick', function() {
+        $(this).children("ul.nested").show()
+        $(this).css('list-style', '\'\\e2c8\  \'')
+    })
 }
 
 function removeSelectedPhotos() {
@@ -79,12 +83,13 @@ function convertFileToObject(file) {
     }
 }
 
-function initTree() {
-    $.ajax({
+async function initTree() {
+    await $.ajax({
         url: "./api/getStructure.php",
         type: 'GET',
         dataType: 'json',
-        success: function(structure){
+        async: true,
+        success: function(structure) {
             structure.children.forEach(folder => {
                 initTreeFolderChildren(folder,$("#folder-selector"))
             })
@@ -96,6 +101,7 @@ function initTreeFolderChildren(folder,currentParentUl){
     var currentThing = currentParentUl.append(`<li><span>${folder.name}</span></li>`).children(":last-child")
     if (folder.children.length != 0){
         currentThing.addClass('icon')
+        currentThing.css('list-style', '\'\\e2c7\  \'')
         // currentThing.addClass('material-symbols-rounded')
         var nextParent = currentThing.append(`<ul class="nested"></ul>`).children(":last-child")
         folder.children.forEach(folder => {

@@ -277,7 +277,7 @@ body {
 
 .icon::marker {
     font-family: 'Material Symbols Rounded';
-    content: "\e2c7\ ";
+    content: var(--iconcode);
     color: white;
     display: inline-block;
 }
