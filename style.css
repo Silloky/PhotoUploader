@@ -266,8 +266,17 @@ body {
     list-style-type: none;
 }
 
+#pathselection {
+    border-left: 2px white solid;
+    padding-left: 20px;
+}
+
+#pathselection > span {
+    font-size: 110%;
+}
+
 #folder-selector {
-    margin: 0;
+    margin-left: 50px;
     padding: 0;
 }
 
@@ -297,6 +306,8 @@ body {
 
 .folder-block span {
     font-size: 105%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .folder-block:hover {

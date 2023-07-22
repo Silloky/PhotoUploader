@@ -77,9 +77,12 @@ $rand = random_int(1,10000);
                         <span class="placeholder">File name</span>
                         <p class="error-text"></p>
                     </div>
-                    <ul id="folder-selector">
-                        
-                    </ul>
+                    <div id="pathselection">
+                        <span>Please select target directory :</span>
+                        <ul id="folder-selector">
+                            
+                        </ul>
+                    </div>
                 </div>
                 <div style="height: 20px; visibility: hidden;"></div>
                 <div id="metadata" class="editor-category">
