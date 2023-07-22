@@ -309,6 +309,26 @@ body {
     font-size: 150%;
 }
 
+.folder-block .create_folder {
+    display: none;
+}
+
+.folder-block:hover .create_folder {
+    display: inline;
+}
+
+input[name="newfoldername"] {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 105%;
+    color: white;
+}
+
+input[name="newfoldername"]::placeholder {
+    color: white;
+}
+
 #preview {
     padding: 15px;
     /* display: flex;

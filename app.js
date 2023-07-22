@@ -49,31 +49,44 @@ async function refreshEditor(list) {
         current.editingListObj = $("#preview").append(html).children(":last-child")
     })
     await initTree()
-    $("#folder-selector li.icon").on('dblclick', function() {
-        $(this).children("ul.nested").show()
-        $(this).css('list-style', '\'\\e2c8\  \'')
-    })
-    $("#folder-selector li").on('mouseover', function(e){
-        e.stopPropagation()
-        $("#folder-selector").find("span:contains(\"cancel\")").hide()
-    })
-    $("#folder-selector li.icon").on('mouseover', function(e){
-        e.stopPropagation()
-        // console.log('------------------------')
-        // console.log($(this))
-        $("#folder-selector").find("span:contains(\"cancel\")").hide()
-        if ($(this).children("ul.nested").is(":visible")){
-            $(this).children(".folder-block").children(".folder-options").children("span:contains(\"cancel\")").show()
+}
+
+async function newFolder(button){
+
+    var ul = button.parent().parent().siblings("ul.nested")
+    console.log(ul)
+    ul.show()
+    button.parent().siblings(".folder-name").css('list-style', '\'\\e2c8\  \'')
+    ul.append('<li><div class="folder-block"><input type="text" name="newfoldername" placeholder="New Folder Name"></div></li>').focus().on('keyup', function(e) {
+        if (e.which == 13) {
+            var newName = $(this).find("input").val()
+            ul.children(":last-child").remove()
+            $("#folder-selector").children().remove()
+            var parentNames = Array()
+            parentNames.push(button.parent().siblings("span").text())
+            parentNames.push(button.parent().parent().parent().parent().siblings(".folder-block").children("span").text())
+            var path = parentNames.reverse().join('/') + "/" + newName
+            postFolderCreation(path).then(res => {
+                console.log(JSON.parse(res))
+                initTree()
+            })
         }
     })
-    $("#folder-selector li.icon").on('mouseleave', function(e){
-        // e.stopPropagation()
-        $(this).eq(0).children(".folder-block").children(".folder-options").children("span:contains(\"cancel\")").hide()
-    })
-    $(".folder-options span:contains(\"cancel\")").on('click', function(e){
-        e.stopPropagation()
-        console.log('YOU WANNA GET RID OF IT ?!')
-        $(this).parent().parent().siblings("ul.nested").hide()
+}
+
+function postFolderCreation(path){
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: "./api/createDirectory.php",
+            type: 'POST',
+            data: {
+                path: path
+            },
+            async: true,
+            success: function(res) {
+                resolve(res)
+            }
+        })
     })
 }
 
@@ -115,13 +128,36 @@ async function initTree() {
             structure.children.forEach(folder => {
                 initTreeFolderChildren(folder,$("#folder-selector"))
             })
+            $("#folder-selector li.icon").on('dblclick', function() {
+                $(this).children("ul.nested").show()
+                $(this).css('list-style', '\'\\e2c8\  \'')
+            })
+            $("#folder-selector li").on('mouseover', function(e){
+                e.stopPropagation()
+                $("#folder-selector").find("span:contains(\"cancel\")").hide()
+            })
+            $("#folder-selector li.icon").on('mouseover', function(e){
+                e.stopPropagation()
+                $("#folder-selector").find("span:contains(\"cancel\")").hide()
+                if ($(this).children("ul.nested").is(":visible")){
+                    $(this).children(".folder-block").children(".folder-options").children("span:contains(\"cancel\")").show()
+                }
+            })
+            $("#folder-selector li.icon").on('mouseleave', function(e){
+                $(this).eq(0).children(".folder-block").children(".folder-options").children("span:contains(\"cancel\")").hide()
+            })
+            $(".folder-options span:contains(\"cancel\")").on('click', function(e){
+                e.stopPropagation()
+                $(this).parent().parent().siblings("ul.nested").hide()
+                $(this).parent().parent().parent().css('list-style', '\'\\e2c7\  \'')
+            })
         }
     })
 }
 
 function initTreeFolderChildren(folder,currentParentUl){
     if (folder.children.length != 0){
-        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded" style="display: none;">cancel</span><span class="material-symbols-rounded" style="display: none;">create_new_folder</span></div></div></li>`).children(":last-child")
+        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded" style="display: none;">cancel</span><span class="material-symbols-rounded create_folder" onclick="newFolder($(this))">create_new_folder</span></div></div></li>`).children(":last-child")
         currentThing.addClass('icon')
         currentThing.css('list-style', '\'\\e2c7\  \'')
         // currentThing.addClass('material-symbols-rounded')
@@ -130,7 +166,7 @@ function initTreeFolderChildren(folder,currentParentUl){
             initTreeFolderChildren(folder,nextParent)
         })
     } else {
-        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded" style="display: none;">folder_delete</span><span class="material-symbols-rounded" style="display: none;">create_new_folder</span></div></div></li>`).children(":last-child")
+        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded create_folder">folder_delete</span><span class="material-symbols-rounded create_folder" onclick="newFolder($(this))">create_new_folder</span></div></div></li>`).children(":last-child")
     }
 }
 
