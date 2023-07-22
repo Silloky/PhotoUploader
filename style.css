@@ -277,13 +277,36 @@ body {
 
 .icon::marker {
     font-family: 'Material Symbols Rounded';
-    content: var(--iconcode);
     color: white;
     display: inline-block;
 }
 
 .nested {
     display: none;
+}
+
+.folder-block {
+    height: 25px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.folder-block span {
+    font-size: 105%;
+}
+
+.folder-block:hover {
+    background-color: var(--hover-color);
+    transition: background-color 1s;
+    cursor: pointer;
+}
+
+.folder-options span {
+    font-size: 150%;
 }
 
 #preview {
