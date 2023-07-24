@@ -54,7 +54,6 @@ async function refreshEditor(list) {
 async function newFolder(button){
 
     var ul = button.parent().parent().siblings("ul.nested")
-    console.log(ul)
     ul.show()
     button.parent().siblings(".folder-name").css('list-style', '\'\\e2c8\  \'')
     ul.append('<li><div class="folder-block"><input type="text" name="newfoldername" placeholder="New Folder Name"></div></li>').focus().on('keyup', function(e) {
@@ -67,7 +66,7 @@ async function newFolder(button){
             parentNames.push(button.parent().parent().parent().parent().siblings(".folder-block").children("span").text())
             var path = parentNames.reverse().join('/') + "/" + newName
             postFolderCreation(path).then(res => {
-                console.log(JSON.parse(res))
+                showToast(res.type, res.message)
                 initTree()
             })
         }
@@ -84,7 +83,7 @@ function postFolderCreation(path){
             },
             async: true,
             success: function(res) {
-                resolve(res)
+                resolve(JSON.parse(res))
             }
         })
     })
