@@ -63,7 +63,12 @@ async function newFolder(button){
             $("#folder-selector").children().remove()
             var parentNames = Array()
             parentNames.push(button.parent().siblings("span").text())
-            parentNames.push(button.parent().parent().parent().parent().siblings(".folder-block").children("span").text())
+            var previousParent = button.parent().parent()
+            do {
+                var currentParent = previousParent.parent().parent()
+                parentNames.push(currentParent.siblings(".folder-block").children("span").text())
+                previousParent = currentParent
+            } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]);
             var path = parentNames.reverse().join('/') + "/" + newName
             postFolderCreation(path).then(res => {
                 showToast(res.type, res.message)
