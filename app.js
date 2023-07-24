@@ -1,4 +1,4 @@
-/// <reference path="./lib/jquery.js" />
+/// <reference path="./lib/jquery.js"/>
 
 function addPhotoBlock(file){
     var uuid = crypto.randomUUID()
@@ -170,6 +170,44 @@ function initTreeFolderChildren(folder,currentParentUl){
     }
 }
 
+function showToast(type, message){
+    hideToast()
+    var toast = $(`#${type}-toast`)
+    toast.find(".toast-message").text(message)
+    toast.removeClass('hidden-toast')
+    toast.addClass('visible-toast')
+}
+
+function hideToast(){
+    var toast = $(".visible-toast")
+    try {
+        toast.removeClass('visible-toast')
+        toast.addClass('hidden-toast')
+        setTimeout(() => {
+            toast.find(".toast-message").text('')
+        }, 500);
+    }
+    catch {}
+}
+
+async function copyToastMessage(button) {
+    var message = button.parent().siblings("div").children(".toast-message").text()
+    if (!navigator.clipboard) {
+        console.error('Clipboard API not available in this browser : please make sure you are using a secure scheme or serving with localhost');
+        return;
+    }
+    navigator.permissions.query({ 
+        name: 'clipboard-write'
+    }).then(result => {
+        if (result.state === 'granted' || result.state === 'prompt') {
+            navigator.clipboard.writeText(message)
+        } else {
+            console.error("Copy error : permission 'clipboard-write' denied. Please allow access to clipboard.");
+            showToast('error', "Couldn't copy : permission denied")
+        }
+    });
+}
+
 // $(window).on('load',function() {
 //     $('.material-icons-rounded').css('display','inline');
 // });
@@ -180,6 +218,10 @@ var selectorRunning = false
 var nullEditor = true
 
 $("#photo-panel-big").hide();
+
+setTimeout(() => {
+    $("#toast-hider").hide()
+}, 2000);
 
 $("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
     e.preventDefault();
