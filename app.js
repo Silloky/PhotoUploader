@@ -74,7 +74,7 @@ async function newFolder(button){
             } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]);
             var path = parentNames.reverse().join('/') + "/" + newName
             postFolderCreation(path).then(res => {
-                showToast(res.type, res.message)
+                showToast(res)
                 initTree()
             })
         }
@@ -91,7 +91,11 @@ function postFolderCreation(path){
             },
             async: true,
             success: function(res) {
-                resolve(JSON.parse(res))
+                resolve(res)
+            }
+        })
+    })
+}
             }
         })
     })
@@ -178,10 +182,16 @@ function initTreeFolderChildren(folder,currentParentUl){
     }
 }
 
-function showToast(type, message){
+function showToast(res){
     hideToast()
-    var toast = $(`#${type}-toast`)
-    toast.find(".toast-message").text(message)
+    var toast = $(`#${res.type}-toast`)
+    if (res.type == 'error'){
+        console.error(res.complex_message)
+    } else if (res.type == 'info' || res.type == 'success'){
+        console.info(res.complex_message)
+    }
+    toast.find(".toast-message").text(res.message)
+    toast.find(".detailed-message").text(res.complex_message)
     toast.removeClass('hidden-toast')
     toast.addClass('visible-toast')
 }
@@ -199,7 +209,9 @@ function hideToast(){
 }
 
 async function copyToastMessage(button) {
-    var message = button.parent().siblings("div").children(".toast-message").text()
+    var firstLine = button.parent().siblings("div").children(".toast-message").text()
+    var secondLine = button.parent().siblings("div").children(".detailed-message").text()
+    var message = firstLine + "\n" + secondLine
     if (!navigator.clipboard) {
         console.error('Clipboard API not available in this browser : please make sure you are using a secure scheme or serving with localhost');
         return;

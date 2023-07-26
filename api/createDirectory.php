@@ -5,17 +5,21 @@ $path = $_POST['path'];
 $basePath = '/media/';
 $completePath = $basePath . $path;
 
-header('Content-Type: text/plain');
+header('Content-Type: application/json');
 
-if (mkdir($completePath)){
+if (mkdir("$completePath")){
     $data = array(
         'type' => 'success',
-        'message' => 'Everything OK, created directory !'
+        'message' => 'Successfully created directory !',
+        'complex_message' => 'Successfully created directory : mkdir all clear',
+        'complete_path' => $completePath
     );
 } else {
     $data = array(
         'type' => 'error',
-        'message' => 'Argh ! An error occured ! Couldn\'t create directory !'
+        'message' => 'Couldn\'t create directory !',
+        'complex_message' => 'Couldn\'t create directory : mkdir throwed ' . error_get_last(),
+        'complete_path' => $completePath
     );
 }
 

@@ -424,6 +424,10 @@ input[name="newfoldername"]::placeholder {
     font-size: 115%;
 }
 
+.detailed-message {
+    display: none;
+}
+
 .actions {
     display: flex;
     flex-direction: column;

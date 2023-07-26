@@ -106,6 +106,7 @@ $rand = random_int(1,10000);
         <div>
             <p class="toast-status">Error...</p>
             <p class="toast-message"></p>
+            <p class="detailed-message"></p>
         </div>
         <div class="actions">
             <span class="material-symbols-rounded" onclick="hideToast()">close</span>
@@ -117,6 +118,7 @@ $rand = random_int(1,10000);
         <div>
             <p class="toast-status">Success !</p>
             <p class="toast-message"></p>
+            <p class="detailed-message"></p>
         </div>
         <div class="actions">
             <span class="material-symbols-rounded" onclick="hideToast()">close</span>
@@ -128,6 +130,7 @@ $rand = random_int(1,10000);
         <div>
             <p class="toast-status">Information</p>
             <p class="toast-message"></p>
+            <p class="detailed-message"></p>
         </div>
         <div class="actions">
             <span class="material-symbols-rounded" onclick="hideToast()">close</span>
