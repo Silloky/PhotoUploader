@@ -96,6 +96,38 @@ function postFolderCreation(path){
         })
     })
 }
+
+function removeFolder(button){
+    var parentNames = Array()
+    parentNames.push(button.parent().siblings("span").text())
+    var previousParent = button.parent().parent()
+    do {
+        var currentParent = previousParent.parent().parent()
+        if (currentParent[0] != $("#folder-selector")[0]){
+            parentNames.push(currentParent.siblings(".folder-block").children("span").text())
+            previousParent = currentParent
+        } else {
+            break
+        }
+    } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]);
+    var path = parentNames.reverse().join('/')
+    postFolderDeletion(path).then(res => {
+        showToast(res)
+        initTree()
+    })
+}
+
+function postFolderDeletion(path){
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: "./api/removeDirectory.php",
+            type: 'POST',
+            data: {
+                path: path
+            },
+            async: true,
+            success: function(res) {
+                resolve(res)
             }
         })
     })
@@ -178,7 +210,7 @@ function initTreeFolderChildren(folder,currentParentUl){
             initTreeFolderChildren(folder,nextParent)
         })
     } else {
-        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded create_folder">folder_delete</span><span class="material-symbols-rounded create_folder" onclick="newFolder($(this))">create_new_folder</span></div></div></li>`).children(":last-child")
+        var currentThing = currentParentUl.append(`<li><div class="folder-block"><span class="folder-name">${folder.name}</span><div class="folder-options"><span class="material-symbols-rounded create_folder" onclick="removeFolder($(this))">folder_delete</span><span class="material-symbols-rounded create_folder" onclick="newFolder($(this))">create_new_folder</span></div></div></li>`).children(":last-child")
     }
 }
 
