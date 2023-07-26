@@ -60,14 +60,17 @@ async function newFolder(button){
         if (e.which == 13) {
             var newName = $(this).find("input").val()
             ul.children(":last-child").remove()
-            $("#folder-selector").children().remove()
             var parentNames = Array()
             parentNames.push(button.parent().siblings("span").text())
             var previousParent = button.parent().parent()
             do {
                 var currentParent = previousParent.parent().parent()
-                parentNames.push(currentParent.siblings(".folder-block").children("span").text())
-                previousParent = currentParent
+                if (currentParent[0] != $("#folder-selector")[0]){
+                    parentNames.push(currentParent.siblings(".folder-block").children("span").text())
+                    previousParent = currentParent
+                } else {
+                    break
+                }
             } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]);
             var path = parentNames.reverse().join('/') + "/" + newName
             postFolderCreation(path).then(res => {
@@ -129,6 +132,7 @@ async function initTree() {
         dataType: 'json',
         async: true,
         success: function(structure) {
+            $("#folder-selector").children().remove()
             structure.children.forEach(folder => {
                 initTreeFolderChildren(folder,$("#folder-selector"))
             })
