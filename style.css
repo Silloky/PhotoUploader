@@ -305,6 +305,10 @@ body {
     justify-content: space-between;
 }
 
+.folder-block.selected-folder {
+    background-color: var(--hover-color);
+}
+
 .folder-block span {
     font-size: 105%;
     text-overflow: ellipsis;

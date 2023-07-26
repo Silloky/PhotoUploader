@@ -180,6 +180,11 @@ async function initTree() {
                 e.stopPropagation()
                 $("#folder-selector").find("span:contains(\"cancel\")").hide()
             })
+            $(".folder-block").on('click', function(e){
+                e.stopPropagation()
+                $("#folder-selector").find(".selected-folder").toggleClass("selected-folder")
+                $(this).addClass("selected-folder")
+            })
             $("#folder-selector li.icon").on('mouseover', function(e){
                 e.stopPropagation()
                 $("#folder-selector").find("span:contains(\"cancel\")").hide()
