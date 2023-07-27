@@ -219,18 +219,38 @@ function initTreeFolderChildren(folder,currentParentUl){
     }
 }
 
+$.fn.exists = function () {
+    return this.length !== 0;
+}
+
 function showToast(res){
-    hideToast()
-    var toast = $(`#${res.type}-toast`)
-    if (res.type == 'error'){
-        console.error(res.complex_message)
-    } else if (res.type == 'info' || res.type == 'success'){
-        console.info(res.complex_message)
+    if (!$(".visible-toast").exists()){
+        var toast = $(`#${res.type}-toast`)
+        if (res.type == 'error'){
+            console.error(res.complex_message)
+        } else if (res.type == 'info' || res.type == 'success'){
+            console.info(res.complex_message)
+        }
+        toast.find(".toast-message").text(res.message)
+        toast.find(".detailed-message").text(res.complex_message)
+        toast.removeClass('hidden-toast')
+        toast.addClass('visible-toast')
+    } else {
+        replaceToast(res)
     }
-    toast.find(".toast-message").text(res.message)
-    toast.find(".detailed-message").text(res.complex_message)
-    toast.removeClass('hidden-toast')
-    toast.addClass('visible-toast')
+}
+
+function replaceToast(res){
+    var initialToast = $(".visible-toast")
+    $("#toast-hider").show()
+    initialToast.removeClass('visible-toast')
+    initialToast.addClass('hidden-toast')
+    initialToast.find(".toast-message").text('')
+    initialToast.find(".detailed-message").text('')
+    setTimeout(() => {
+        $("#toast-hider").hide()
+        showToast(res)
+    }, 500)
 }
 
 function hideToast(){
@@ -240,6 +260,7 @@ function hideToast(){
         toast.addClass('hidden-toast')
         setTimeout(() => {
             toast.find(".toast-message").text('')
+            toast.find(".detailed-message").text('')
         }, 500);
     }
     catch {}
