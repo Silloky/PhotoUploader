@@ -30,7 +30,10 @@ $rand = random_int(1,10000);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="./lib/jquery.js"></script>
     <script src="multiselector.min.js"></script>
+    <script src="./lib/datepicker.js?refreshthing=<?= $rand ?>"></script>
+    <script src="./lib/jquery.mousewheel.min.js"></script>
     <link rel="stylesheet" href="./style.css?refreshthing=<?= $rand ?>">
+    <link rel="stylesheet" href="./lib/datepicker.css?refreshthing=<?= $rand ?>">
 </head>
 <body>
     <div id="sidebar">
@@ -87,6 +90,10 @@ $rand = random_int(1,10000);
                 <div style="height: 20px; visibility: hidden;"></div>
                 <div id="metadata" class="editor-category">
                     <div class="editor-category-titles">Metadata</div>
+                    <div id="date-section">
+                        <input type="text" id="testdate" style="display: none;">
+                    </div>
+
                     <div id="map">
                         
                     </div>

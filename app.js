@@ -29,7 +29,7 @@ function addPhotoBlock(file){
 }
 
 
-async function refreshEditor(list) {
+function refreshEditor(list) {
     if (nullEditor){
         $("#editor-null").hide() // hides the default editor pane
         $("#real-editor").show() // and shows the actual useful one
@@ -37,6 +37,7 @@ async function refreshEditor(list) {
     }
     $("#preview").children("img").remove() // empties the preview pane
     $("#folder-selector").children().remove() // empties the directory selector
+    $("#date-selector").remove() // removes the fancy date selector
     var currentlyEditingBlocks = list // array of DOM elements
     var currentlyEditing = Array() // complex object
     currentlyEditingBlocks.each(function() {
@@ -48,7 +49,13 @@ async function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
-    await initTree() // inits the directory structure selector
+    initTree() // inits the directory structure selector
+    var dateinput = $("#testdate") // input with date in text form
+    $.dateSelect.show({ // starts the date selector
+        element: dateinput, // binds it to the input
+        container: '#date-section' // sets #date-section as its parent
+    });
+    dateinput.trigger('click') // clicks the input to show the selector
 }
 
 async function newFolder(button){

@@ -1,0 +1,90 @@
+/**
+* jQuery DateSelect
+* @author biohzrdmx <github.com/biohzrdmx>
+* @license MIT
+*/
+
+:root {
+	--body-bg: #2b3035;
+	/* --main-bg: #707a84; */
+	--main-bg: #2b3035;
+	--hover-color: #535b64;
+	--text-color: #fff;
+	--fill-icons: 0;
+}
+
+/* #date-selector {
+	position: absolute;
+} */
+
+#date-selector {
+	background-color: var(--body-bg);
+	box-sizing: content-box;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	column-gap: 15px;
+	width: fit-content;
+}
+
+#date-selector .select {
+	width: 100px;
+	float: left;
+	margin-right: 1px;
+	color: var(--text-color);
+	position: relative;
+	cursor: default;
+	display: grid;
+}
+
+#date-selector .select.year {
+	margin-right: 0;
+}
+
+#date-selector .select > div {
+	text-align: center;
+	width: 100%;
+}
+
+#date-selector .select span {
+	display: block;
+	margin: 0 10px 0;
+	text-align: center;
+	user-select: none;
+}
+
+#date-selector .select span.num {
+	font-size: 34px;
+	color: var(--text-color);
+	line-height: 45px;
+}
+
+#date-selector .select span.text {
+	font-size: 12px;
+	text-transform: uppercase;
+	line-height: 15px;
+}
+
+#date-selector .select span.btn-arrow {
+	font-size: 200%;
+}
+
+#date-selector .select:hover {
+	background: var(--hover-color);
+	color: var(--text-color);
+	border-radius: 7px;
+	transition: background-color 1s;
+    cursor: pointer;
+}
+
+#date-selector .select:hover span {
+	color: var(--text-color);
+}
+
+
+.material-symbols-rounded {
+    font-variation-settings:
+		'FILL' var(--fill-icons),
+		'wght' 300,
+		'GRAD' 200
+}

@@ -91,6 +91,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .bigicon {
@@ -343,6 +344,13 @@ input[name="newfoldername"] {
 
 input[name="newfoldername"]::placeholder {
     color: white;
+}
+
+#date-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 #preview {
