@@ -92,10 +92,26 @@ $rand = random_int(1,10000);
                     <div class="editor-category-titles">Metadata</div>
                     <div id="date-section">
                         <input type="text" id="testdate" style="display: none;">
+                        <div id="date-information" style="display: none;">
+                            <span class="material-symbols-rounded">info</span>
+                            <span>Multiple values default to 01/01/1970</span>
+                        </div>
                     </div>
+                    <div id="location">
+                        <div id="existing-place">
+                            <div class="text-field">
+                                <input type="text" name="placename" value="" placeholder=" " onchange="updatePlaceSearchResults()">
+                                <span class="placeholder">Search for presaved place here</span>
+                                <p class="error-text"></p>
+                            </div>
+                            <div id="search-result-box">
+                                
+                            </div>
+                        </div>
+                        <span id="locationoptions-or">or</span>
+                        <div id="new-place">
 
-                    <div id="map">
-                        
+                        </div>
                     </div>
                 </div>
             </div>
