@@ -32,8 +32,10 @@ $rand = random_int(1,10000);
     <script src="multiselector.min.js"></script>
     <script src="./lib/datepicker.js?refreshthing=<?= $rand ?>"></script>
     <script src="./lib/jquery.mousewheel.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="./style.css?refreshthing=<?= $rand ?>">
     <link rel="stylesheet" href="./lib/datepicker.css?refreshthing=<?= $rand ?>">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
     <div id="sidebar">
@@ -122,9 +124,12 @@ $rand = random_int(1,10000);
                                 </div>
                             </div>
                         </div>
-                        <span id="locationoptions-or">or</span>
+                        <span id="locationoptions-or">or create a new location</span>
                         <div id="new-place">
+                            <div id="map">
 
+                            </div>
+                            <span>hello</span>
                         </div>
                     </div>
                 </div>

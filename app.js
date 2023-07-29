@@ -56,6 +56,14 @@ function refreshEditor(list) {
         container: '#date-section' // sets #date-section as its parent
     });
     dateinput.trigger('click') // clicks the input to show the selector
+    if (!mapLoaded){
+        var map = L.map('map').setView([46.767709937459294, 2.43165930707079], 5.5)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map)
+        map.on('click', function(e){placeMarker(e,map)})
+    }
 }
 
 async function newFolder(button){
@@ -277,6 +285,13 @@ async function updatePlaceSearchResults(query){
     }
 }
 
+function placeMarker(e, map){
+    if (mapMarker != undefined){
+        map.removeLayer(mapMarker)
+    }
+    mapMarker = new L.marker(e.latlng).addTo(map)
+}
+
 $.fn.exists = function () {
     return this.length !== 0; // returns {if the specified element exists}
 }
@@ -361,6 +376,8 @@ var photosBar = $("#photos")
 var selectorRunning = false
 var nullEditor = true
 let previousResults = []
+let mapLoaded = false
+var mapMarker
 // inits variables
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'
