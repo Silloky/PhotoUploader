@@ -230,6 +230,53 @@ function initTreeFolderChildren(folder,currentParentUl){
     }
 }
 
+function getSearchResults(query){
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: "./api/searchPlaces.php",
+            type: 'GET',
+            data: {
+                q: query
+            },
+            async: true,
+            success: function(res) {
+                resolve(res)
+            }
+        })
+    })
+}
+
+async function updatePlaceSearchResults(query){
+    if (query == ''){
+        $("#no-search").show()
+        $("#results").children().remove()
+        $("#results").hide()
+        previousResults = []
+    } else {
+        var results = await getSearchResults(query)
+        if (results.length == 0){
+            $("#no-results").show()
+            $("#results").children().remove()
+            $("#results").hide()
+        } else {
+            if (previousResults != results){
+                $("#results").children().remove()
+                results.forEach(place => {
+                    var placeName = place.name_en
+                    $("#results").append(
+                        `<li class="place-search-result">
+                            <span>${placeName}</span>
+                        </li>`
+                    )
+                })
+                $("#search-result-box").children().hide()
+                $("#results").show()
+            }
+        }
+        previousResults = results
+    }
+}
+
 $.fn.exists = function () {
     return this.length !== 0; // returns {if the specified element exists}
 }
@@ -313,6 +360,7 @@ let photos = Array()
 var photosBar = $("#photos")
 var selectorRunning = false
 var nullEditor = true
+let previousResults = []
 // inits variables
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'

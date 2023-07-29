@@ -408,6 +408,13 @@ input[name="newfoldername"]::placeholder {
     justify-content: center;
 }
 
+.search-null-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 #results {
     display: block;
     list-style: none;

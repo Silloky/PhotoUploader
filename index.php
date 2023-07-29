@@ -100,36 +100,18 @@ $rand = random_int(1,10000);
                     <div id="location">
                         <div id="existing-place">
                             <div class="text-field">
-                                <input type="text" name="placename" value="" placeholder=" " onkeyup="updatePlaceSearchResults(this.value)">
+                                <input type="text" name="placename" value="" placeholder=" " onkeydown="updatePlaceSearchResults(this.value)" onkeyup="updatePlaceSearchResults(this.value)">
                                 <span class="placeholder">Search for presaved place here</span>
                                 <p class="error-text"></p>
                             </div>
                             <div id="search-result-box" class="scrollbarhidden">
-                                <div id="no-search" style="display: none;">
+                                <div id="no-search">
                                     <div class="search-null-box">
                                         <span class="material-symbols-rounded">north</span>
                                         <span>Search above the find pre-existing places</span>
                                     </div>
                                 </div>
-                                <ul id="results">
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
-                                    <li class="place-search-result">
-                                        <span>Baillargues Home</span>
-                                    </li>
+                                <ul id="results" style="display: none;">
                                 </ul>
                                 <div id="no-results" style="display: none;">
                                     <div class="search-null-box">
