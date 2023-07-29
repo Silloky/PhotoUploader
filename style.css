@@ -389,9 +389,41 @@ input[name="newfoldername"]::placeholder {
 
 #search-result-box {
     width: 80%;
-    height: 100px;
+    height: 140px;
     border: white solid 2px;
     border-radius: 7px;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+#search-result-box > div {
+    width: 100%;
+    height: 100%;
+}
+
+#no-search, #no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#results {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.place-search-result {
+    padding: 5px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+}
+
+.place-search-result:hover {
+    background-color: var(--hover-color);
+    cursor: pointer;
 }
 
 #locationoptions-or {
