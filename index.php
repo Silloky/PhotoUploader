@@ -93,7 +93,7 @@ $rand = random_int(1,10000);
                 <div id="metadata" class="editor-category">
                     <div class="editor-category-titles">Metadata</div>
                     <div id="date-section">
-                        <input type="text" id="testdate" style="display: none;">
+                        <input type="text" id="dateinput" style="display: none;">
                         <div id="date-information" style="display: none;">
                             <span class="material-symbols-rounded">info</span>
                             <span>Multiple values default to 01/01/1970</span>

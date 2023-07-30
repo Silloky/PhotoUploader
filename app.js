@@ -38,6 +38,7 @@ function refreshEditor(list) {
     $("#preview").children("img").remove() // empties the preview pane
     $("#folder-selector").children().remove() // empties the directory selector
     $("#date-selector").remove() // removes the fancy date selector
+    $("input[name='filename']").val('')
     var currentlyEditingBlocks = list // array of DOM elements
     var currentlyEditing = Array() // complex object
     currentlyEditingBlocks.each(function() {
@@ -49,8 +50,9 @@ function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
+    setOriginalPhotosData(currentlyEditing)
     initTree() // inits the directory structure selector
-    var dateinput = $("#testdate") // input with date in text form
+    var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
         element: dateinput, // binds it to the input
         container: '#date-section' // sets #date-section as its parent
@@ -63,6 +65,52 @@ function refreshEditor(list) {
             attribution: '© OpenStreetMap'
         }).addTo(map)
         map.on('click', function(e){placeMarker(e,map)})
+function setOriginalPhotosData(currentlyEditing) {
+    var names = []
+    var dates = []
+    currentlyEditing.forEach(photo => {
+        names.push(photo.name)
+        dates.push(photo.lastModifiedDate.toLocaleDateString("fr-FR"))
+    })
+
+    var simpleNames = []
+    if (names.length == 1){
+        simpleNames.push(names[0].match(/([a-zA-Z0-9_\s])*/)[0].slice(0, -1))
+    } else {
+        names.forEach(name => {
+            var sequentialResults = name.match(/(([a-zA-Z0-9\s_-]+)\s\(\d\).([a-zA-Z]{3,4}))/)
+            console.log(sequentialResults)
+            console.log(name)
+            if (sequentialResults != null){
+                simpleNames.push(sequentialResults[2])
+            } else {
+                simpleNames.push('no match')
+            }
+        })
+    }
+    console.log(simpleNames)
+    if (simpleNames.every((val, i, arr) => val === arr[0]) && simpleNames[0] != 'no match'){
+        $("input[name='filename']").val(simpleNames[0])
+    } else {
+        var toastData = {
+            type: 'info',
+            message: 'Selected photos have different, unordered names',
+            complex_message: 'User-selected photos have different, unordered and with no apprent logic names. Showing \'Multiple values\' in input'
+        }
+        $("input[name='filename']").val('Multiple values')
+        showToast(toastData)
+    }
+
+    var dateinput = $("#dateinput")
+    if (dates.every((val, i, arr) => val === arr[0])){
+        dateinput.val(dates[0])
+        $("#date-information").hide()
+    } else {
+        dateinput.val('01/01/1970')
+        $("#date-information").show()
+    }
+
+}
     }
 }
 
