@@ -65,6 +65,12 @@ function refreshEditor(list) {
             attribution: '© OpenStreetMap'
         }).addTo(map)
         map.on('click', function(e){placeMarker(e,map)})
+        mapLoaded = true
+    }
+
+    saveData(currentlyEditing)
+}
+
 function setOriginalPhotosData(currentlyEditing) {
     var names = []
     var dates = []
@@ -111,6 +117,56 @@ function setOriginalPhotosData(currentlyEditing) {
     }
 
 }
+
+function saveData(currentlyEditing){
+    $("input[name='filename']").on('keydown', function() {
+        var name = $(this).val()
+        if (name != ''){
+            let i = 1
+            currentlyEditing.forEach(photo => {
+                if (currentlyEditing.length == 1){
+                    photo.name = name + mimeToExtension(photo)
+                } else {
+                    photo.name = name + ' (' + i + ')' + mimeToExtension(photo)
+                    i++
+                }
+            })
+        }
+    })
+    $("#dateinput").on('change', function(){
+        var date = $.dateSelect.defaults.parseDate($(this).val())
+        currentlyEditing.forEach(photo => {
+            const originalDate = photo.lastModifiedDate
+            date.setHours(originalDate.getHours());
+            date.setMinutes(originalDate.getMinutes());
+            date.setSeconds(originalDate.getSeconds());
+            date.setMilliseconds(originalDate.getMilliseconds());
+            photo.lastModifiedDate = date
+            photo.lastModified = date.getTime()
+        })
+    })
+    $(".folder-block").on('click', function(e){
+        e.stopPropagation()
+        $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
+        $(this).addClass("selected-folder") // adds the selected-folder class to the current folder
+    })
+}
+
+function mimeToExtension(file){
+    if (file.type == 'image/jpeg'){
+        return '.jpg'
+    } else if (file.type == 'image/png'){
+        return '.png'
+    } else if (file.type == 'image/webp'){
+        return '.webpg'
+    } else if (file.type == 'image/svg+xml'){
+        return '.svg'
+    } else if (file.type == 'image/gif'){
+        return '.gif'
+    } else if (file.type == 'image/avif'){
+        return '.avif'
+    } else if (file.type == 'image/apng'){
+        return '.apng'
     }
 }
 
@@ -247,11 +303,6 @@ async function initTree() {
             $("#folder-selector li").on('mouseover', function(e){
                 e.stopPropagation() // necessary
                 $("#folder-selector").find("span:contains(\"cancel\")").hide() // when hoverring ele A, hides the folder-collapse button on hover on !A
-            })
-            $(".folder-block").on('click', function(e){
-                e.stopPropagation()
-                $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
-                $(this).addClass("selected-folder") // adds the selected-folder class to the current folder
             })
             $("#folder-selector li.icon").on('mouseover', function(e){
                 e.stopPropagation()
