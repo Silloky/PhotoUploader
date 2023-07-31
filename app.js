@@ -68,6 +68,9 @@ function refreshEditor(list) {
         element: dateinput, // binds it to the input
         container: '#date-section' // sets #date-section as its parent
     });
+    $("#date-overlay").on('click', function(){
+        $("#date-overlay").hide()
+    })
     dateinput.trigger('click') // clicks the input to show the selector
     if (!mapLoaded){
         var map = L.map('map').setView([46.767709937459294, 2.43165930707079], 5.5)

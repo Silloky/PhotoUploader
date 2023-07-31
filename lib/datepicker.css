@@ -25,6 +25,33 @@
 	grid-template-columns: 1fr 1fr 1fr;
 	column-gap: 15px;
 	width: fit-content;
+	position: relative;
+}
+
+#date-selector #date-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 20;
+	border-radius: 7px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#date-selector #date-overlay span {
+	display: none;
+}
+
+#date-selector #date-overlay:hover {
+	backdrop-filter: blur(4px);
+	cursor: pointer;
+}
+
+#date-selector #date-overlay:hover span {
+	display: block;
 }
 
 #date-selector .select {
