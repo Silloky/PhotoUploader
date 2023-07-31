@@ -102,7 +102,7 @@ $rand = random_int(1,10000);
                     <div id="location">
                         <div id="existing-place">
                             <div class="text-field">
-                                <input type="text" name="placename" value="" placeholder=" " onkeydown="updatePlaceSearchResults(this.value)" onkeyup="updatePlaceSearchResults(this.value)">
+                                <input type="text" name="placename" value="" placeholder=" ">
                                 <span class="placeholder">Search for presaved place here</span>
                                 <p class="error-text"></p>
                             </div>

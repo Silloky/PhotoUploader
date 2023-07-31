@@ -433,6 +433,11 @@ input[name="newfoldername"]::placeholder {
     cursor: pointer;
 }
 
+.selected-place {
+    background-color: var(--hover-color);
+    cursor: pointer;
+}
+
 #locationoptions-or {
     display: grid;
     grid-template-columns: 1fr auto 1fr;

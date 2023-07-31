@@ -41,6 +41,7 @@ function refreshEditor(list) {
     $("input[name='filename']").val('')
     $("input[name='filename']").off()
     $("#dateinput").off()
+    $("input[name='placename']").off()
     var currentlyEditingBlocks = list // array of DOM elements
     var currentlyEditing = Array() // complex object
     currentlyEditingBlocks.each(function() {
@@ -53,7 +54,9 @@ function refreshEditor(list) {
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
     setOriginalPhotosData(currentlyEditing)
-    initTree() // inits the directory structure selector
+    initTree().then(function(){
+        startSavingListeners(currentlyEditing)
+    }) // inits the directory structure selector
     var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
         element: dateinput, // binds it to the input
@@ -69,8 +72,10 @@ function refreshEditor(list) {
         map.on('click', function(e){placeMarker(e,map)})
         mapLoaded = true
     }
-
-    saveData(currentlyEditing)
+    $("input[name='placename']").on('keydown keyup', function(){
+        updatePlaceSearchResults(this.value, currentlyEditing)
+    })
+    startSavingListeners(currentlyEditing)
 }
 
 function setOriginalPhotosData(currentlyEditing) {
@@ -119,7 +124,7 @@ function setOriginalPhotosData(currentlyEditing) {
 
 }
 
-function saveData(currentlyEditing){
+function startSavingListeners(currentlyEditing){
     $("input[name='filename']").on('keydown', function() {
         var name = $(this).val()
         if (name != ''){
@@ -154,6 +159,12 @@ function saveData(currentlyEditing){
         e.stopPropagation()
         $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
         $(this).addClass("selected-folder") // adds the selected-folder class to the current folder
+    })
+}
+
+function savePhotosLocation(currentlyEditing, data){
+    currentlyEditing.forEach(photo => {
+        photo.gpsLocation = data
     })
 }
 
@@ -358,7 +369,7 @@ function getSearchResults(query){
     })
 }
 
-async function updatePlaceSearchResults(query){
+async function updatePlaceSearchResults(query, currentlyEditing){
     if (query == ''){
         $("#no-search").show()
         $("#results").children().remove()
@@ -376,10 +387,15 @@ async function updatePlaceSearchResults(query){
                 results.forEach(place => {
                     var placeName = place.name_en
                     $("#results").append(
-                        `<li class="place-search-result">
+                        `<li class="place-search-result" placeid=${place.id}>
                             <span>${placeName}</span>
                         </li>`
                     )
+                })
+                $(".place-search-result").on('click', function(){
+                    $(".place-search-result").removeClass('selected-place')
+                    $(this).addClass('selected-place')
+                    savePhotosLocation(currentlyEditing, $(this).attr('placeid'))
                 })
                 $("#search-result-box").children().hide()
                 $("#results").show()
