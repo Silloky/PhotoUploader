@@ -9,8 +9,8 @@ function addPhotoBlock(file){
     var html = `
     <div class="photoblock" uuid="${uuid}">
             <img src="${url}" alt="">
-            <span>${file.name}</span>
-            <span>${date} ${time}</span>
+            <span class="filename">${file.name}</span>
+            <span class="datetime">${date} ${time}</span>
     </div>
     ` // structure for 'Available Photos' pane
     photosBar.append(html)
@@ -39,6 +39,8 @@ function refreshEditor(list) {
     $("#folder-selector").children().remove() // empties the directory selector
     $("#date-selector").remove() // removes the fancy date selector
     $("input[name='filename']").val('')
+    $("input[name='filename']").off()
+    $("#dateinput").off()
     var currentlyEditingBlocks = list // array of DOM elements
     var currentlyEditing = Array() // complex object
     currentlyEditingBlocks.each(function() {
@@ -94,7 +96,6 @@ function setOriginalPhotosData(currentlyEditing) {
             }
         })
     }
-    console.log(simpleNames)
     if (simpleNames.every((val, i, arr) => val === arr[0]) && simpleNames[0] != 'no match'){
         $("input[name='filename']").val(simpleNames[0])
     } else {
@@ -130,6 +131,7 @@ function saveData(currentlyEditing){
                     photo.name = name + ' (' + i + ')' + mimeToExtension(photo)
                     i++
                 }
+                photo.availableListObj.children(".filename").text(photo.name)
             })
         }
     })
@@ -143,6 +145,9 @@ function saveData(currentlyEditing){
             date.setMilliseconds(originalDate.getMilliseconds());
             photo.lastModifiedDate = date
             photo.lastModified = date.getTime()
+            var dateToShow = date.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
+            var timeToShow = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
+            photo.availableListObj.children(".datetime").text(dateToShow + ' ' + timeToShow)
         })
     })
     $(".folder-block").on('click', function(e){
