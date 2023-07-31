@@ -470,6 +470,48 @@ async function copyToastMessage(button) {
     });
 }
 
+function filterNewFiles(files){
+    var videos = []
+    var audios = []
+    var otherFiles = []
+    files.forEach(file => {
+        // for each file
+        if (file.type.match(/image.*/)){
+            var jsonFile = convertFileToObject(file) // converts read-only File Object to standard rw object
+            photos.push(jsonFile) // pushes the rw photo data to the photos array
+            addPhotoBlock(jsonFile) // adds the photoblock to the 'Available Photos' list
+        } else if (file.type.match(/video.*/)){
+            videos.push(file.name)
+        } else if (file.type.match(/audio.*/)){
+            audios.push(file.name)
+        } else {
+            otherFiles.push(file.name)
+        }
+    })
+    if (videos.length > 0){
+        var toastData = {
+            type: 'info',
+            message: 'You cannot import videos using this tool. Videos have been removed from list.',
+            complex_message: 'User tried importing video files : ' + videos.toString() + '. Importing videos is not allowed.'
+        }
+        showToast(toastData)
+    } else if (audios.length > 0){
+        var toastData = {
+            type: 'info',
+            message: 'You cannot import audio files using this tool. Music has been removed from list.',
+            complex_message: 'User tried importing video files : ' + audios.toString() + '. Importing audio is not allowed.'
+        }
+        showToast(toastData)
+    } else if (otherFiles.length > 0){
+        var toastData = {
+            type: 'info',
+            message: 'You cannot import non-media using this tool. These files have been removed from list.',
+            complex_message: 'User tried importing non-media files : [' + otherFiles.toString() + ']. Importing non-media files is not allowed.'
+        }
+        showToast(toastData)
+    }
+}
+
 let photos = Array()
 var photosBar = $("#photos")
 var selectorRunning = false
@@ -492,20 +534,10 @@ $("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', functio
 
 $("#dnd").on('drop', function (e) {
     var justImportedPhotos = Array.from(e.originalEvent.dataTransfer.files) // gets the array of File Objects imported
-    justImportedPhotos.forEach(file => {
-        // for each file
-        var jsonFile = convertFileToObject(file) // converts read-only File Object to standard rw object
-        photos.push(jsonFile) // pushes the rw photo data to the photos array
-        addPhotoBlock(jsonFile) // adds the photoblock to the 'Available Photos' list
-    })
+    filterNewFiles(justImportedPhotos)
 });
 
 $("#filebrowser")[0].onchange = evt => {
     var justImportedPhotos = Array.from($("#filebrowser")[0].files) // handles files uploaded via the browser Open menu
-    justImportedPhotos.forEach(file => {
-        // for each file
-        var jsonFile = convertFileToObject(file) // converts read-only File Object to standard rw object
-        photos.push(jsonFile) // pushes the rw photo data to the photos array
-        addPhotoBlock(jsonFile) // adds the photoblock to the 'Available Photos' list
-    })
+    filterNewFiles(justImportedPhotos)
 }
