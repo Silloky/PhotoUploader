@@ -42,6 +42,9 @@ function refreshEditor(list) {
     $("input[name='filename']").off()
     $("#dateinput").off()
     $("input[name='placename']").off()
+    $("#no-search").show()
+    $("ul#results").hide()
+    $("ul#results").children().remove()
     var currentlyEditingBlocks = list // array of DOM elements
     var currentlyEditing = Array() // complex object
     currentlyEditingBlocks.each(function() {
@@ -52,6 +55,9 @@ function refreshEditor(list) {
         var html = `<img src="${URL.createObjectURL(current.fileObject)}" alt="${current.name}" uuid=${current.uuid}>`
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
+    })
+    $("input[name='placename']").on('keydown keyup', function(){
+        updatePlaceSearchResults(this.value, currentlyEditing)
     })
     setOriginalPhotosData(currentlyEditing)
     initTree().then(function(){
@@ -72,18 +78,19 @@ function refreshEditor(list) {
         map.on('click', function(e){placeMarker(e,map)})
         mapLoaded = true
     }
-    $("input[name='placename']").on('keydown keyup', function(){
-        updatePlaceSearchResults(this.value, currentlyEditing)
-    })
     startSavingListeners(currentlyEditing)
 }
 
 function setOriginalPhotosData(currentlyEditing) {
     var names = []
     var dates = []
+    var queries = []
+    var gpsLocations = []
     currentlyEditing.forEach(photo => {
         names.push(photo.name)
         dates.push(photo.lastModifiedDate.toLocaleDateString("fr-FR"))
+        queries.push(photo.placeSearchQuery)
+        gpsLocations.push(photo.gpsLocation)
     })
 
     var simpleNames = []
@@ -121,6 +128,17 @@ function setOriginalPhotosData(currentlyEditing) {
         dateinput.val('01/01/1970')
         $("#date-information").show()
     }
+
+    if (queries.every((val, i, arr) => val === arr[0]) && gpsLocations.every((val, i, arr) => val === arr[0])){
+        $("input[name='placename']").val(queries[0])
+        updatePlaceSearchResults(queries[0], currentlyEditing).then(function(){
+            console.log($("ul#results").children(`.place-search-result[placeid="${gpsLocations[0]}"]`))
+            $("ul#results").children(`.place-search-result[placeid="${gpsLocations[0]}"]`).addClass('selected-place')
+        })
+    } else {
+        $("input[name='placename']").val('Multiple values')
+    }
+
 
 }
 
@@ -162,9 +180,10 @@ function startSavingListeners(currentlyEditing){
     })
 }
 
-function savePhotosLocation(currentlyEditing, data){
+function savePhotosLocation(currentlyEditing, data, query){
     currentlyEditing.forEach(photo => {
         photo.gpsLocation = data
+        photo.placeSearchQuery = query
     })
 }
 
@@ -395,7 +414,7 @@ async function updatePlaceSearchResults(query, currentlyEditing){
                 $(".place-search-result").on('click', function(){
                     $(".place-search-result").removeClass('selected-place')
                     $(this).addClass('selected-place')
-                    savePhotosLocation(currentlyEditing, $(this).attr('placeid'))
+                    savePhotosLocation(currentlyEditing, $(this).attr('placeid'), query)
                 })
                 $("#search-result-box").children().hide()
                 $("#results").show()
