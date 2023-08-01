@@ -431,6 +431,34 @@ function placeMarker(e, map){
     }
     mapMarker = new L.marker(e.latlng).addTo(map)
     $("#place-creator").show()
+    addressInNewPlaceForm(e.latlng)
+}
+
+function addressInNewPlaceForm(latlng){
+    var apiURL = `https://api.geoapify.com/v1/geocode/reverse?lat=${latlng.lat}&lon=${latlng.lng}&format=json&apiKey=${geoapifyKey}`
+    $.ajax({
+        url: apiURL,
+        type: 'GET',
+        success: function(res) {
+            var result = res.results[0]
+            if (result.result_type == 'street'){
+                var addressLine1 = result.name
+            } else if (result.result_type == 'building'){
+                var addressLine1 = result.housenumber + ' ' + result.street
+            }
+            if (result.hamlet != undefined){
+                var addressLine2 = result.hamlet
+            }
+            if (result.suburb != undefined){
+                var addressLine2 = result.suburb
+            }
+            $("input[name=\"address-line-1\"]").val(addressLine1)
+            $("input[name=\"address-line-2\"]").val(addressLine2)
+            $("input[name=\"postal\"]").val(result.postcode)
+            $("input[name=\"city\"]").val(result.city)
+            $("input[name=\"country\"]").val(result.country)
+        }
+    })
 }
 
 $.fn.exists = function () {
@@ -561,6 +589,7 @@ var nullEditor = true
 let previousResults = []
 let mapLoaded = false
 var mapMarker
+const geoapifyKey = 'fe163ddccd36422baea56b816c3af0b6'
 // inits variables
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'

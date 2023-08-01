@@ -464,6 +464,7 @@ input[name="newfoldername"]::placeholder {
 #map {
     height: 50vh;
     width: 90%;
+    border-radius: 7px;
 }
 
 #place-creator {

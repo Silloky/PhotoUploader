@@ -168,8 +168,8 @@ $rand = random_int(1,10000);
                                     <p class="error-text"></p>
                                 </div>
                                 <div class="text-field">
-                                    <input type="text" name="altitude" value="" placeholder=" ">
-                                    <span class="placeholder">Altitude</span>
+                                    <input type="text" name="country" value="" placeholder=" ">
+                                    <span class="placeholder">Country</span>
                                     <p class="error-text"></p>
                                 </div>
                             </div>
