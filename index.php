@@ -172,7 +172,7 @@ $rand = random_int(1,10000);
                                     <span class="placeholder">Country</span>
                                     <p class="error-text"></p>
                                 </div>
-                                <button type="submit" id="submit-new-place">Create place and select it</button>
+                                <button type="submit" id="submit-new-place" onclick="submitNewPlace($(this).attr('lat'), $(this).attr('lng'))">Create place and select it</button>
                             </div>
                         </div>
                     </div>

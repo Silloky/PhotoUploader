@@ -461,6 +461,62 @@ function addressInNewPlaceForm(latlng){
             $("input[name=\"country\"]").val(result.country)
         }
     })
+    $("#submit-new-place").attr('lat', latlng.lat)
+    $("#submit-new-place").attr('lng', latlng.lng)
+}
+
+async function submitNewPlace(lat, lng){
+    if ($("input[name=\"address-line-2\"]").val() == ''){
+        var fullAddress = $("input[name=\"address-line-1\"]").val() + ', ' + $("input[name=\"postal\"]").val() + ' ' + $("input[name=\"city\"]").val() + ', ' + $("input[name=\"country\"]").val()
+    } else {
+        var fullAddress = $("input[name=\"address-line-1\"]").val() + ', ' + $("input[name=\"address-line-2\"]").val() + ', ' + $("input[name=\"postal\"]").val() + ' ' + $("input[name=\"city\"]").val() + ', ' + $("input[name=\"country\"]").val()
+    }
+    const newPlaceData = {
+        placeid : $("input[name=\"place-id\"]").val(),
+        placeNameEN : $("input[name=\"place-name-en\"]").val(),
+        placeNameFR : $("input[name=\"place-name-fr\"]").val(),
+        address: fullAddress,
+        latitude: lat,
+        longitude: lng,
+        altitude: (await getAltitude(lat, lng)).elevation[0]
+    }
+
+    var res = await $.ajax({
+        url: "./api/addPlace.php",
+        type: 'POST',
+        data: {
+            placeInfo: newPlaceData
+        },
+        async: true,
+        success: function(res) {
+            return res
+        }
+    })
+
+    showToast(res)
+
+    if (res.type == 'success'){
+        $("#place-creator").find("input").each(function(){
+            $(this).val('')
+        })
+        $("#place-creator").hide()
+        $("input[name='placename']").val(newPlaceData.placeNameEN)
+        updatePlaceSearchResults(newPlaceData.placeNameEN).then(function(){
+            $("ul#results").children(`.place-search-result[placeid="${newPlaceData.placeid}"]`).addClass('selected-place')
+        })
+    }
+
+}
+
+async function getAltitude(lat, lng) {
+    return await $.ajax({
+        url: 'https://api.open-meteo.com/v1/elevation',
+        type: 'GET',
+        data: {
+            latitude: lat,
+            longitude: lng
+        }
+    })
 }
 
 $.fn.exists = function () {
