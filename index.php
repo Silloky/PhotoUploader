@@ -94,7 +94,7 @@ $rand = random_int(1,10000);
                     <div class="editor-category-titles">Metadata</div>
                     <div id="date-section">
                         <input type="text" id="dateinput" style="display: none;">
-                        <div id="date-information" style="display: none;">
+                        <div class="element-information" style="display: none;">
                             <span class="material-symbols-rounded">info</span>
                             <span>Multiple values default to 01/01/1970</span>
                         </div>
@@ -126,10 +126,53 @@ $rand = random_int(1,10000);
                         </div>
                         <span id="locationoptions-or">or create a new location</span>
                         <div id="new-place">
-                            <div id="map">
-
+                            <div id="map"></div>
+                            <div class="element-information">
+                                <span class="material-symbols-rounded">info</span>
+                                <span>Click on map to place marker</span>
                             </div>
-                            <span>hello</span>
+                            <div id="place-creator" style="display: none;">
+                                <div class="text-field">
+                                    <input type="text" name="place-id" value="" placeholder=" ">
+                                    <span class="placeholder">Place ID</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="place-name-en" value="" placeholder=" ">
+                                    <span class="placeholder">Place Name (EN)</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="place-name-fr" value="" placeholder=" ">
+                                    <span class="placeholder">Place Name (FR)</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="address-line-1" value="" placeholder=" ">
+                                    <span class="placeholder">Address first line</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="address-line-2" value="" placeholder=" ">
+                                    <span class="placeholder">Address second line</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="postal" value="" placeholder=" ">
+                                    <span class="placeholder">Postal Code</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="city" value="" placeholder=" ">
+                                    <span class="placeholder">City name</span>
+                                    <p class="error-text"></p>
+                                </div>
+                                <div class="text-field">
+                                    <input type="text" name="altitude" value="" placeholder=" ">
+                                    <span class="placeholder">Altitude</span>
+                                    <p class="error-text"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

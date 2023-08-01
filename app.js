@@ -430,6 +430,7 @@ function placeMarker(e, map){
         map.removeLayer(mapMarker)
     }
     mapMarker = new L.marker(e.latlng).addTo(map)
+    $("#place-creator").show()
 }
 
 $.fn.exists = function () {

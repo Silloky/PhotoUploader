@@ -363,7 +363,7 @@ input[name="newfoldername"]::placeholder {
     padding-bottom: 10px;
 }
 
-#date-information span {
+.element-information span {
     font-size: small;
 }
 
@@ -466,7 +466,14 @@ input[name="newfoldername"]::placeholder {
     width: 90%;
 }
 
-
+#place-creator {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    padding-top: 20px;
+    grid-auto-flow: column;
+}
 
 
 #preview {
