@@ -46,7 +46,9 @@ function refreshEditor(list) {
     $("ul#results").hide()
     $("ul#results").children().remove()
     var currentlyEditingBlocks = list // array of DOM elements
-    var currentlyEditing = Array() // complex object
+    if (currentlyEditing != []){
+        currentlyEditing = Array() // complex object
+    }
     currentlyEditingBlocks.each(function() {
         var current = photos.find(photo => photo.uuid === $(this).attr('uuid')) // gets the corresponding photo in the imported photos list
         current.availableListObj = $(this) // sets the availableListObj property of the object to be the DOM of the photoblock in the 'Available Photos' list
@@ -57,11 +59,11 @@ function refreshEditor(list) {
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
     $("input[name='placename']").on('keydown keyup', function(){
-        updatePlaceSearchResults(this.value, currentlyEditing)
+        updatePlaceSearchResults(this.value)
     })
-    setOriginalPhotosData(currentlyEditing)
+    setOriginalPhotosData()
     initTree().then(function(){
-        startSavingListeners(currentlyEditing)
+        startSavingListeners()
     }) // inits the directory structure selector
     var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
@@ -81,10 +83,10 @@ function refreshEditor(list) {
         map.on('click', function(e){placeMarker(e,map)})
         mapLoaded = true
     }
-    startSavingListeners(currentlyEditing)
+    startSavingListeners()
 }
 
-function setOriginalPhotosData(currentlyEditing) {
+function setOriginalPhotosData() {
     var names = []
     var dates = []
     var queries = []
@@ -143,7 +145,7 @@ function setOriginalPhotosData(currentlyEditing) {
 
 }
 
-function startSavingListeners(currentlyEditing){
+function startSavingListeners(){
     $("input[name='filename']").on('keydown keyup', function() {
         var name = $(this).val()
         if (name != ''){
@@ -181,7 +183,7 @@ function startSavingListeners(currentlyEditing){
     })
 }
 
-function savePhotosLocation(currentlyEditing, data, query){
+function savePhotosLocation(data, query){
     currentlyEditing.forEach(photo => {
         photo.gpsLocation = data
         photo.placeSearchQuery = query
@@ -389,7 +391,7 @@ function getSearchResults(query){
     })
 }
 
-async function updatePlaceSearchResults(query, currentlyEditing){
+async function updatePlaceSearchResults(query){
     if (query == ''){
         $("#no-search").show()
         $("#results").children().remove()
@@ -585,6 +587,7 @@ function filterNewFiles(files){
 let photos = Array()
 var photosBar = $("#photos")
 var selectorRunning = false
+var currentlyEditing = Array()
 var nullEditor = true
 let previousResults = []
 let mapLoaded = false
