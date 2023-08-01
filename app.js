@@ -102,8 +102,6 @@ function setOriginalPhotosData(currentlyEditing) {
     } else {
         names.forEach(name => {
             var sequentialResults = name.match(/(([a-zA-Z0-9\s_-]+)\s\(\d\).([a-zA-Z]{3,4}))/)
-            console.log(sequentialResults)
-            console.log(name)
             if (sequentialResults != null){
                 simpleNames.push(sequentialResults[2])
             } else {
@@ -146,7 +144,7 @@ function setOriginalPhotosData(currentlyEditing) {
 }
 
 function startSavingListeners(currentlyEditing){
-    $("input[name='filename']").on('keydown', function() {
+    $("input[name='filename']").on('keydown keyup', function() {
         var name = $(this).val()
         if (name != ''){
             let i = 1
