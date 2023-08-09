@@ -95,3 +95,40 @@ button[type='submit'] {
     width: 50%;
     min-width: min-content;
 }
+
+#language-selector {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    column-gap: 2px;
+    background-color: var(--text-color);
+    height: min-content;
+}
+
+.flag {
+    background-color: var(--body-bg);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flag:hover {
+    cursor: pointer;
+}
+
+
+.flag:first-child {
+    padding-right: 10px;
+}
+
+.flag:last-child {
+    padding-left: 10px;
+}
+
+.flag img {
+    width: 100%;
+    border-radius: 5px;
+    height: 5vh;
+}

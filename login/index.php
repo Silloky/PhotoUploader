@@ -19,11 +19,13 @@ if (isset($_POST)){
                 $_SESSION['username'] = $username;
                 header('Location: ../');
             } else {
-                echo 'ur a bloody gay';
+                echo 'ur a bloody mf';
             }
         }
     }
 }
+
+$rand = random_int(1,10000);
 
 
 ?>
@@ -38,9 +40,9 @@ if (isset($_POST)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="./login.css?refreshthing=<?= $rand ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="./login.js" defer></script>
+    <script src="./login.js?refreshthing=<?= $rand ?>" defer></script>
 </head>
 <body>
 
@@ -62,6 +64,15 @@ if (isset($_POST)){
             <button type="submit" value="signin" name="action">Sign in</button>
         </form>
     </main>
+
+    <div id="language-selector">
+        <div class="flag">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="french flag">
+        </div>
+        <div class="flag">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg" alt="english flag">
+        </div>
+    </div>
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 </body>
