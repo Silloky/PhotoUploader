@@ -1,0 +1,27 @@
+[
+    {
+        "sentenceID": "welcome",
+        "french": "Bienvenue !",
+        "english": "Welcome !"
+    },
+    {
+        "sentenceID": "please-log-in",
+        "french": "Veuillez vous connecter",
+        "english": "Please log in"
+    },
+    {
+        "sentenceID": "username",
+        "french": "Identifiant",
+        "english": "Username"
+    },
+    {
+        "sentenceID": "password",
+        "french": "Mot de passe",
+        "english": "Password"
+    },
+    {
+        "sentenceID": "log-in-btn",
+        "french": "Se connecter",
+        "english": "Log in"
+    }
+]
