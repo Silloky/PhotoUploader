@@ -59,9 +59,9 @@ $rand = random_int(1,10000);
                 <span class="material-symbols-rounded">delete_forever</span>
                 <span>Remove selected photo(s)</span>
             </li>
-            <li class="control">
-                <span class="material-symbols-rounded">help</span>
-                <span>Show help</span>
+            <li class="control" onclick="logout()" id="logout-control">
+                <span class="material-symbols-rounded">logout</span>
+                <span>Log out</span>
             </li>
         </ul>
     </div>

@@ -640,6 +640,29 @@ function filterNewFiles(files){
     }
 }
 
+function logout(){
+    logoutCount++
+    if (logoutCount == 2){
+        $.ajax({
+            url: './logout.php',
+            type: 'GET',
+            success: function(res){
+                showToast(res)
+                setTimeout(function(){
+                    window.location.reload()
+                }, 5000)
+            }
+        })
+    } else {
+        var toastData = {
+            type: 'error',
+            message: "If you logout, your current changes will be lost\nClick 'Log out' again to confirm",
+            complex_message: "User tried logging out with a dirty worktop. Asking for confirmation."
+        }
+        showToast(toastData)
+    }
+}
+
 let photos = Array()
 var photosBar = $("#photos")
 var selectorRunning = false
@@ -649,6 +672,7 @@ let previousResults = []
 let mapLoaded = false
 var mapMarker
 const geoapifyKey = 'fe163ddccd36422baea56b816c3af0b6'
+let logoutCount = 0
 // inits variables
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'
