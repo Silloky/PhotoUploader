@@ -39,7 +39,7 @@ function refreshEditor(list) {
     $("#folder-selector").children().remove() // empties the directory selector
     $("#date-selector").remove() // removes the fancy date selector
     $("input[name='filename']").val('')
-    $("input[name='filename']").off()
+    $("input[name='filename']").off('keyup')
     $("#dateinput").off()
     $("input[name='placename']").off()
     $("#no-search").show()
@@ -62,9 +62,6 @@ function refreshEditor(list) {
         updatePlaceSearchResults(this.value)
     })
     setOriginalPhotosData()
-    initTree().then(function(){
-        startSavingListeners()
-    }) // inits the directory structure selector
     var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
         element: dateinput, // binds it to the input
@@ -83,7 +80,9 @@ function refreshEditor(list) {
         map.on('click', function(e){placeMarker(e,map)})
         mapLoaded = true
     }
-    startSavingListeners()
+    initTree().then(function(){
+        startSavingListeners()
+    }) // inits the directory structure selector
 }
 
 function setOriginalPhotosData() {
@@ -145,18 +144,71 @@ function setOriginalPhotosData() {
 
 }
 
+function getSequentialNames(name, nElements) {
+    let regex = new RegExp(`${name}\\s\\((\\d{1,3})\\).[a-zA-Z]{3}`)
+    // console.log('Regex :')
+    // console.log(regex)
+    var namedAlike = photos.filter(item => item.name.match(regex))
+    // console.log('Existing photos :')
+    // console.log(namedAlike)
+    var existingIndices = []
+    namedAlike.forEach(photo => {
+        existingIndices.push(parseInt(photo.name.match(regex)[1]))
+    })
+    // console.log('Existing Indices :')
+    // console.log(existingIndices)
+    var missingIndices = []
+    var newIndices = []
+    if (existingIndices.length > 0){
+        for (var i = 1; i <= Math.max(...existingIndices); i++){
+            if (existingIndices.indexOf(i) == -1){
+                missingIndices.push(i)
+            }
+        }
+        var nNewIndices = nElements - missingIndices.length + 1
+        var valueNewStart = Math.max(...existingIndices) + 1
+    } else {
+        var nNewIndices = nElements - 1
+        var valueNewStart = 1
+    }
+    // console.log('Missing Indices :')
+    // console.log(missingIndices)
+    for (var i = 0; i <= nNewIndices; i++){
+        newIndices.push(valueNewStart)
+        valueNewStart++
+    }
+    // console.log('New Indices :')
+    // console.log(newIndices)
+    var result = missingIndices.concat(newIndices)
+    // console.log('Final result :')
+    // console.log(result)
+    // console.log('========================================')
+    return result
+}
+
 function startSavingListeners(){
-    $("input[name='filename']").on('keydown keyup', function() {
-        var name = $(this).val()
-        if (name != ''){
-            let i = 1
+    $("input[name='filename']").on('keyup', function(e) {
+        if (e.which != 16 && e.which != 17){
+            var name = $(this).val()
+            if (name == '' && e.which == 8 && !e.lastBackspace){
+                let newE = $.Event('keyup')
+                newE.which = 8
+                newE.lastBackspace = true
+                $("input[name='filename']").trigger(newE)
+            }
+            var sequentialNames = getSequentialNames(name, currentlyEditing.length)
+            var sequencePosition = 0
             currentlyEditing.forEach(photo => {
                 if (currentlyEditing.length == 1){
-                    photo.name = name + mimeToExtension(photo)
+                    if (sequentialNames.length > 1){
+                        photo.name = name + ' (' + sequentialNames[sequencePosition] + ')' + mimeToExtension(photo)
+                        sequencePosition++
+                    } else {
+                        photo.name = name + mimeToExtension(photo)
+                    }
                 } else {
-                    photo.name = name + ' (' + i + ')' + mimeToExtension(photo)
-                    i++
-                }
+                    photo.name = name + ' (' + sequentialNames[sequencePosition] + ')' + mimeToExtension(photo)
+                    sequencePosition++                }
                 photo.availableListObj.children(".filename").text(photo.name)
             })
         }
