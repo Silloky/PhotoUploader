@@ -1,21 +1,30 @@
 @media (prefers-color-scheme: dark){
     :root {
         --body-bg: #2b3035;
-        /* --main-bg: #707a84; */
-        --main-bg: #2b3035;
-        --hover-color: #535b64;
-        --text-color: #fff;
+        --hover-color: #00ffe530;
+        --selected-color: #00ffe559;
+        --border-color: #ffffff;
+        --text-color: #ffffff;
         --fill-icons: 0;
+        --logout-btn-color: #be00008a;
+        --error-toast-color: #be0000;
+        --success-toast-color: #008500;
+        --info-toast-color: #5dacdf;
     }
 }
 
 @media (prefers-color-scheme: light){
     :root {
-        --body-bg: #f8f9fa;
-        --main-bg: #f8f9fa;
-        --hover-color: #c8dff6;
+        --body-bg: #ebebeb;
+        --hover-color: #accbf9;
+        --selected-color: #629ef8;
+        --border-color: #4b4b4b;
         --text-color: #000;
-        --fill-icons: 1
+        --fill-icons: 1;
+        --logout-btn-color: #be00008a;
+        --error-toast-color: #c12222;
+        --success-toast-color: #008500;
+        --info-toast-color: #5dacdf;
     }
 }
 
@@ -61,7 +70,7 @@ body {
 #sidebar {
     display: grid;
     grid-template-rows: 3fr 1fr;
-    border-right: #f8f9fa 2px solid;
+    border-right: var(--border-color) 2px solid;
     min-width: 0;
     min-height: 0;
 }
@@ -84,7 +93,7 @@ body {
     /* width: 100%;
     height: 100%; */
     height: calc(100% - 20px);
-    border: #f8f9fa dashed 6px;
+    border: var(--border-color) dashed 6px;
     border-radius: 12px;
     margin: 10px;
     display: flex;
@@ -123,7 +132,7 @@ body {
 }
 
 .photoblock.selected {
-    background-color: var(--hover-color);
+    background-color: var(--selected-color);
 }
 
 .photoblock img {
@@ -139,7 +148,7 @@ body {
 }
 
 #controls {
-    border-top: #f8f9fa 2px solid;
+    border-top: var(--border-color) 2px solid;
     margin: 0;
     padding: 10px;
 }
@@ -159,7 +168,7 @@ body {
 }
 
 #logout-control:hover {
-    background-color: rgba(190, 0, 0, 0.54);
+    background-color: var(--logout-btn-color);
 }
 
 .control * {
@@ -196,13 +205,13 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 15px;
-    border-right: 2px solid #f8f9fa;
+    border-right: 2px solid var(--border-color);
 }
 
 .editor-category {
     /* width: 100%; */
     min-height: 20vh;
-    border: 3px #f8f9fa solid;
+    border: 3px var(--border-color) solid;
     border-radius: 12px;
     padding: 15px;
 }
@@ -229,20 +238,20 @@ body {
 .text-field input {
     outline: none;
     border: none;
-    border-bottom: white 2px solid;
+    border-bottom: var(--border-color) 2px solid;
     /* border-radius: 5px; */
     padding: 9px 0px;
     margin-top: 0;
     width: 100%;
     font-size: 100%;
-    color: white;
+    color: var(--text-color);
     background-color: transparent;
 }
 
 .placeholder {
     position: absolute;
     margin: 17px 0;
-    color:  white;
+    color:  var(--text-color);
     display: flex;
     align-items: center;
     top: -6px;
@@ -259,12 +268,12 @@ body {
 }
 
 .text-field input:focus{
-    color: white;
-    border-color: white;
+    color: var(--text-color);
+    border-color: var(--selected-color);
 }
 
 .text-field input:focus + .placeholder {
-    color: white;
+    color: var(--text-color);
 }
 
 #basic-information ul {
@@ -272,7 +281,7 @@ body {
 }
 
 #pathselection {
-    border-left: 2px white solid;
+    border-left: 2px var(--border-color) solid;
     padding-left: 20px;
 }
 
@@ -291,7 +300,7 @@ body {
 
 .icon::marker {
     font-family: 'Material Symbols Rounded';
-    color: white;
+    color: var(--text-color);
     display: inline-block;
 }
 
@@ -310,7 +319,7 @@ body {
 }
 
 .folder-block.selected-folder {
-    background-color: var(--hover-color);
+    background-color: var(--selected-color);
 }
 
 .folder-block span {
@@ -342,11 +351,11 @@ input[name="newfoldername"] {
     outline: none;
     border: none;
     font-size: 105%;
-    color: white;
+    color: var(--text-color);
 }
 
 input[name="newfoldername"]::placeholder {
-    color: white;
+    color: var(--text-color);
 }
 
 #metadata {
@@ -360,7 +369,7 @@ input[name="newfoldername"]::placeholder {
     align-items: center;
     justify-content: center;
     padding-bottom: 15px;
-    border-bottom: 2px white solid;
+    border-bottom: 2px var(--border-color) solid;
 }
 
 #date-selector {
@@ -394,7 +403,7 @@ input[name="newfoldername"]::placeholder {
 #search-result-box {
     width: 80%;
     height: 140px;
-    border: white solid 2px;
+    border: var(--border-color) solid 2px;
     border-radius: 7px;
     padding: 10px;
     overflow-y: scroll;
@@ -438,7 +447,7 @@ input[name="newfoldername"]::placeholder {
 }
 
 .selected-place {
-    background-color: var(--hover-color);
+    background-color: var(--selected-color);
     cursor: pointer;
 }
 
@@ -453,7 +462,7 @@ input[name="newfoldername"]::placeholder {
 #locationoptions-or::after, #locationoptions-or::before {
     content: "";
     align-self: center;
-    border-top: white solid 1px;
+    border-top: var(--border-color) solid 1px;
 }
 
 #new-place {
@@ -484,7 +493,7 @@ input[name="newfoldername"]::placeholder {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: var(--text-color);
     font-size: medium;
-    background-color: #2ab7a9;
+    background-color: var(--selected-color);
     outline: none;
     border: none;
     padding: 15px;
@@ -496,7 +505,7 @@ input[name="newfoldername"]::placeholder {
 
 #submit-new-place:hover {
     cursor: pointer;
-    background-color: #60afa8;
+    background-color: var(--hover-color);
 }
 
 
@@ -517,7 +526,7 @@ input[name="newfoldername"]::placeholder {
 }
 
 #bottom-bar {
-    border-top: #f8f9fa 2px solid;
+    border-top: var(--border-color) 2px solid;
     grid-column: 1/-1;
 }
 
@@ -533,6 +542,7 @@ input[name="newfoldername"]::placeholder {
     box-sizing: border-box;
     padding: 15px;
     border-radius: 12px;
+    color: #ffffff;
 }
 
 .visible-toast {
@@ -595,15 +605,15 @@ input[name="newfoldername"]::placeholder {
 }
 
 #error-toast {
-    background-color: rgb(190, 0, 0);
+    background-color: var(--error-toast-color);
 }
 
 #success-toast {
-    background-color: rgb(0, 133, 0);
+    background-color: var(--success-toast-color);
 }
 
 #info-toast {
-    background-color: rgb(93, 172, 223);
+    background-color: var(--info-toast-color);
 }
 
 #toast-hider {

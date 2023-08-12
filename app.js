@@ -28,7 +28,6 @@ function addPhotoBlock(file){
     }
 }
 
-
 function refreshEditor(list) {
     if (nullEditor){
         $("#editor-null").hide() // hides the default editor pane
