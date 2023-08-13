@@ -41,6 +41,7 @@ function refreshEditor(list) {
     $("input[name='filename']").off('keyup')
     $("#dateinput").off()
     $("input[name='placename']").off()
+    $("input[name='placename']").val('')
     $("#no-search").show()
     $("ul#results").hide()
     $("ul#results").children().remove()
@@ -131,11 +132,12 @@ function setOriginalPhotosData() {
     }
 
     if (queries.every((val, i, arr) => val === arr[0]) && gpsLocations.every((val, i, arr) => val === arr[0])){
-        $("input[name='placename']").val(queries[0])
-        updatePlaceSearchResults(queries[0], currentlyEditing).then(function(){
-            console.log($("ul#results").children(`.place-search-result[placeid="${gpsLocations[0]}"]`))
-            $("ul#results").children(`.place-search-result[placeid="${gpsLocations[0]}"]`).addClass('selected-place')
-        })
+        if (queries[0] != undefined && gpsLocations != undefined){
+            $("input[name='placename']").val(queries[0])
+            updatePlaceSearchResults(queries[0], currentlyEditing).then(function(){
+                $("ul#results").children(`.place-search-result[placeid="${gpsLocations[0]}"]`).addClass('selected-place')
+            })
+        }
     } else {
         $("input[name='placename']").val('Multiple values')
     }
@@ -234,11 +236,9 @@ function startSavingListeners(){
     })
 }
 
-function savePhotosLocation(data, query){
-    currentlyEditing.forEach(photo => {
-        photo.gpsLocation = data
-        photo.placeSearchQuery = query
-    })
+function savePhotoLocation(photo, placeid, query){
+    photo.gpsLocation = placeid
+    photo.placeSearchQuery = query
 }
 
 function mimeToExtension(file){
@@ -468,7 +468,9 @@ async function updatePlaceSearchResults(query){
                 $(".place-search-result").on('click', function(){
                     $(".place-search-result").removeClass('selected-place')
                     $(this).addClass('selected-place')
-                    savePhotosLocation(currentlyEditing, $(this).attr('placeid'), query)
+                    currentlyEditing.forEach(photo => {
+                        savePhotoLocation(photo, $(this).attr('placeid'), query)
+                    })
                 })
                 $("#search-result-box").children().hide()
                 $("#results").show()

@@ -548,7 +548,7 @@ input[name="newfoldername"]::placeholder {
 .visible-toast {
     opacity: 1;
     animation: fadein 0.5s;
-    z-index: 10;
+    z-index: 400;
 }
 
 .hidden-toast {
