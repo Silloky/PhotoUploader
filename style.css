@@ -163,7 +163,7 @@ body {
 
 .control:hover {
     background-color: var(--hover-color);
-    transition: background-color 1s;
+    transition: background-color .5s;
     cursor: pointer;
 }
 
