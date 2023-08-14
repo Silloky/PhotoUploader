@@ -186,7 +186,8 @@ $rand = random_int(1,10000);
         </div>
     </div>
     <div id="bottom-bar">
-        
+        <button type="button">Continue</button>
+        <button type="button">Go back</button>
     </div>
     <div class="toast hidden-toast" id="error-toast">
         <span class="toast-icon material-symbols-rounded">warning</span>
