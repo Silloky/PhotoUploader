@@ -29,7 +29,7 @@ $rand = random_int(1,10000);
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="./lib/jquery.js"></script>
-    <script src="multiselector.min.js"></script>
+    <script src="./lib/multiselector.min.js"></script>
     <script src="./lib/datepicker.js?refreshthing=<?= $rand ?>"></script>
     <script src="./lib/jquery.mousewheel.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
