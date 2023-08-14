@@ -57,7 +57,7 @@ $rand = random_int(1,10000);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./colors.css?refreshthing=<?= $rand ?>">
+    <link rel="stylesheet" href="../colors.css?refreshthing=<?= $rand ?>">
     <link rel="stylesheet" href="./login.css?refreshthing=<?= $rand ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="./login.js?refreshthing=<?= $rand ?>" defer></script>
@@ -73,11 +73,15 @@ $rand = random_int(1,10000);
 
         <form action="./index.php" method="post">
             <div id="fields">
-                <div class="field">
-                    <input type="text" name="user" placeholder="<?= returnText('username', $lang, $textData) ?>">
+                <div class="text-field">
+                    <input type="text" name="user" value="" placeholder=" ">
+                    <span class="placeholder"><?= returnText('username', $lang, $textData) ?></span>
+                    <p class="error-text"></p>
                 </div>
-                <div class="field">
-                    <input type="password" name="pwd" placeholder="<?= returnText('password', $lang, $textData) ?>">
+                <div class="text-field">
+                    <input type="text" name="pwd" value="" placeholder=" ">
+                    <span class="placeholder"><?= returnText('password', $lang, $textData) ?></span>
+                    <p class="error-text"></p>
                 </div>
             </div>
             <button type="submit" value="signin" name="action"><?= returnText('log-in-btn', $lang, $textData) ?></button>

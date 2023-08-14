@@ -1,23 +1,3 @@
-
-@media (prefers-color-scheme: dark){
-    :root {
-        --body-bg: #2b3035;
-        /* --main-bg: #707a84; */
-        --main-bg: #2b3035;
-        --main-border: #eee;
-        --text-color: #fff;
-    }
-}
-
-@media (prefers-color-scheme: light){
-    :root {
-        --body-bg: #f8f9fa;
-        --main-bg: #f8f9fa;
-        --main-border: #eee;
-        --text-color: #000;
-    }
-}
-
 html, body {
     margin: 0;
     padding: 0;
@@ -40,8 +20,8 @@ main {
     min-width: 25%;
     min-height: 30%;
     padding: 15px;
-    background-color: var(--main-bg);
-    border: var(--main-border) 2px solid;
+    background-color: var(--body-bg);
+    border: var(--border-color) 2px solid;
     border-radius: 7px;
     display: flex;
     align-items: center;
@@ -83,17 +63,70 @@ form {
     width: 100%;
 }
 
-.field input {
+.text-field {
+    position: relative;
+    margin-bottom: 10px;
+    place-self: center;
+}
+
+.text-field input {
+    outline: none;
+    border: none;
+    border-bottom: var(--border-color) 2px solid;
+    /* border-radius: 5px; */
+    padding: 9px 0px;
+    margin-top: 0;
+    width: 100%;
+    font-size: 100%;
+    color: var(--text-color);
+    background-color: transparent;
+}
+
+.placeholder {
+    position: absolute;
+    margin: 17px 0;
+    color:  var(--text-color);
+    display: flex;
+    align-items: center;
+    top: -6px;
+    /* left: 17px; */
+    transition: all 0.2s;
+    transform-origin: 0% 0%;
+    pointer-events: none;
+}
+
+.text-field input:focus + .placeholder,
+.text-field input:not(:placeholder-shown) + .placeholder {
+    transform: scale(0.8) translateY(-23px) translateX(0px);
+    /* background-color: transparent; */
+}
+
+.text-field input:focus{
+    color: var(--text-color);
+    border-color: var(--selected-color);
+}
+
+.text-field input:focus + .placeholder {
     color: var(--text-color);
 }
 
 button[type='submit'] {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: medium;
     margin-top: 10px;
     padding: 15px;
     border-radius: 5px;
-    background-color: #2ab7a9;
+    background-color: var(--selected-color);
+    color: var(--text-color);
+    outline: none;
+    border: none;
     width: 50%;
     min-width: min-content;
+}
+
+button[type='submit']:hover {
+    cursor: pointer;
+    background-color: var(--hover-color);
 }
 
 #language-selector {
