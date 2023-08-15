@@ -1,4 +1,4 @@
-/// <reference path="./lib/jquery.js"/>
+/// <reference path="../../lib/jquery.js"/>
 
 function addPhotoBlock(file){
     var uuid = crypto.randomUUID() // creates a unique id for the imported photo (cannot rely on name as name might change during process)
