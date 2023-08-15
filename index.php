@@ -29,7 +29,9 @@ if (!(array_key_exists('connected',$_SESSION))){
     <link rel="stylesheet" href="./steps/common.css">
 </head>
 <body>
-    <?php include('./steps/editing/editing.php') ?>
-    <?php include('./modules/toasts/toasts.php'); ?>
+    <div id="bottom-bar">
+        <button type="button">Continue</button>
+        <button type="button">Go back</button>
+    </div>
 </body>
 </html>
