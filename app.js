@@ -572,10 +572,6 @@ async function getAltitude(lat, lng) {
     })
 }
 
-$.fn.exists = function () {
-    return this.length !== 0; // returns {if the specified element exists}
-}
-
 function filterNewFiles(files){
     var videos = []
     var audios = []
@@ -654,10 +650,6 @@ let logoutCount = 0
 // inits variables
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'
-
-setTimeout(() => {
-    $("#toast-hider").hide()
-}, 2000); // show the toast hider for 2 seconds (prevents flashing due to toast animation)
 
 $("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
     e.preventDefault(); // prevents the default behaviour with drag n drop, which is to open the dropped object in a new tab

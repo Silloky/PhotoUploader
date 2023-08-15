@@ -528,3 +528,12 @@ input[name="newfoldername"]::placeholder {
     cursor: pointer;
     background-color: var(--hover-color);
 }
+
+#toast-hider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40vw;
+    height: 30vh;
+    background-color: var(--body-bg);
+}

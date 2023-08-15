@@ -1,3 +1,7 @@
+$.fn.exists = function () {
+    return this.length !== 0; // returns {if the specified element exists}
+}
+
 function showToast(res){
     if (!$(".visible-toast").exists()){ // gets if an element with class .visible-toast exists
         // if not :
@@ -72,3 +76,7 @@ async function copyToastMessage(button) {
         }
     });
 }
+
+setTimeout(() => {
+    $("#toast-hider").hide()
+}, 2000); // show the toast hider for 2 seconds (prevents flashing due to toast animation)

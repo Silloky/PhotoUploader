@@ -19,9 +19,31 @@
     z-index: 400;
 }
 
+@keyframes fadein {
+    from {
+        right: 0;
+        opacity: 0;
+    }
+    to {
+        right: 15px;
+        opacity: 1;
+    }
+}
+
 .hidden-toast {
     opacity: 0;
     animation: fadeout 0.5s;
+}
+
+@keyframes fadeout {
+    from {
+        right: 15px;
+        opacity: 1;
+    }
+    to {
+        right: 0;
+        opacity: 0;
+    }
 }
 
 .toast-icon {
@@ -60,13 +82,4 @@
 
 #info-toast {
     background-color: var(--info-toast-color);
-}
-
-#toast-hider {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40vw;
-    height: 30vh;
-    background-color: var(--body-bg);
 }

@@ -165,3 +165,12 @@ button[type='submit']:hover {
     border-radius: 5px;
     height: 5vh;
 }
+
+#toast-hider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--body-bg);
+    width: 50vw;
+    height: 20vh;
+}

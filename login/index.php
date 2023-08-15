@@ -31,13 +31,19 @@ if (isset($_POST)){
             require('../dbconfig.php');
             $sql = "SELECT * FROM users WHERE username='$username'";
             $result = mysqli_query($conn,$sql);
-            $hash = (mysqli_fetch_assoc($result))['pwd'];
-            if (password_verify($pwd, $hash)){
-                $_SESSION['connected'] = true;
-                $_SESSION['username'] = $username;
-                header('Location: ../');
+            if ($result->num_rows > 0){
+                $hash = (mysqli_fetch_assoc($result))['pwd'];
+                if (password_verify($pwd, $hash)){
+                    $_SESSION['connected'] = true;
+                    $_SESSION['username'] = $username;
+                    header('Location: ../');
+                }
             } else {
-                echo 'ur a bloody mf';
+                $toastContents = json_encode(Array(
+                    'type' => 'error',
+                    'message' => 'Incorrect username/password !',
+                    'complex_message' => 'User entered non-corresponding username-password combination.'
+                ));
             }
         }
     }
@@ -55,10 +61,10 @@ if (isset($_POST)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../modules/colors.css">
+    <link rel="stylesheet" href="../modules/palettes/colors.css">
     <link rel="stylesheet" href="./login.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="../login.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="./login.js" defer></script>
     <script src="../lib/jquery.js"></script>
 </head>
 <body>
@@ -95,6 +101,12 @@ if (isset($_POST)){
         </div>
     </div>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <?php 
+        include('../modules/toasts/toasts.php');
+        if (isset($toastContents)) :
+    ?>
+        <script>showToast(<?= $toastContents ?>)</script>
+    <?php endif; ?>
+
 </body>
 </html>
