@@ -12,10 +12,6 @@ if (!(array_key_exists('connected',$_SESSION))){
     }
 }
 
-$rand = random_int(1,10000);
-
-
-
 ?>
 
 
@@ -25,17 +21,18 @@ $rand = random_int(1,10000);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Photos</title>
-    <script src="./app.js?refreshthing=<?= $rand ?>" defer></script>
+    <script src="./app.js" defer></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="./lib/jquery.js"></script>
     <script src="./lib/multiselector.min.js"></script>
-    <script src="./lib/datepicker.js?refreshthing=<?= $rand ?>"></script>
+    <script src="./lib/datepicker.js"></script>
     <script src="./lib/jquery.mousewheel.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="./colors.css?refreshthing=<?= $rand ?>">
-    <link rel="stylesheet" href="./style.css?refreshthing=<?= $rand ?>">
-    <link rel="stylesheet" href="./lib/datepicker.css?refreshthing=<?= $rand ?>">
+    <link rel="stylesheet" href="./modules/palettes/colors.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./modules/cssanims/fade.css">
+    <link rel="stylesheet" href="./lib/datepicker.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
@@ -189,42 +186,6 @@ $rand = random_int(1,10000);
         <button type="button">Continue</button>
         <button type="button">Go back</button>
     </div>
-    <div class="toast hidden-toast" id="error-toast">
-        <span class="toast-icon material-symbols-rounded">warning</span>
-        <div>
-            <p class="toast-status">Error...</p>
-            <p class="toast-message"></p>
-            <p class="detailed-message"></p>
-        </div>
-        <div class="actions">
-            <span class="material-symbols-rounded" onclick="hideToast()">close</span>
-            <span class="material-symbols-rounded" onclick="copyToastMessage($(this))">content_copy</span>
-        </div>
-    </div>
-    <div class="toast hidden-toast" id="success-toast">
-        <span class="toast-icon material-symbols-rounded">done_all</span>
-        <div>
-            <p class="toast-status">Success !</p>
-            <p class="toast-message"></p>
-            <p class="detailed-message"></p>
-        </div>
-        <div class="actions">
-            <span class="material-symbols-rounded" onclick="hideToast()">close</span>
-            <span class="material-symbols-rounded" onclick="copyToastMessage($(this))">content_copy</span>
-        </div>
-    </div>
-    <div class="toast hidden-toast" id="info-toast">
-        <span class="toast-icon material-symbols-rounded">info</span>
-        <div>
-            <p class="toast-status">Information</p>
-            <p class="toast-message"></p>
-            <p class="detailed-message"></p>
-        </div>
-        <div class="actions">
-            <span class="material-symbols-rounded" onclick="hideToast()">close</span>
-            <span class="material-symbols-rounded" onclick="copyToastMessage($(this))">content_copy</span>
-        </div>
-    </div>
-    <div id="toast-hider"></div>
+    <?php include('./modules/toasts/toasts.php'); ?>
 </body>
 </html>
