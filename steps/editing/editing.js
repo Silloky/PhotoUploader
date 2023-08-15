@@ -618,7 +618,7 @@ function logout(){
     logoutCount++
     if (logoutCount == 2){
         $.ajax({
-            url: './logout.php',
+            url: './api/logout.php',
             type: 'GET',
             success: function(res){
                 showToast(res)
