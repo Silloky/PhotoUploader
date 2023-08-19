@@ -12,6 +12,10 @@ if (!(array_key_exists('connected',$_SESSION))){
     }
 }
 
+if (!(array_key_exists('step', $_SESSION))){
+    $_SESSION['step'] = 'editing';
+}
+
 ?>
 
 
@@ -25,13 +29,11 @@ if (!(array_key_exists('connected',$_SESSION))){
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="./lib/jquery.js"></script>
     <script src="./lib/jquery.mousewheel.min.js"></script>
+    <script src="./steps/loader.js" defer></script>
     <link rel="stylesheet" href="./modules/palettes/colors.css">
     <link rel="stylesheet" href="./steps/common.css">
 </head>
 <body>
-    <div id="bottom-bar">
-        <button type="button">Continue</button>
-        <button type="button">Go back</button>
-    </div>
+
 </body>
 </html>

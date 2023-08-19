@@ -3,12 +3,11 @@
 function addPhotoBlock(file){
     var uuid = crypto.randomUUID() // creates a unique id for the imported photo (cannot rely on name as name might change during process)
     file.uuid = uuid
-    var url = URL.createObjectURL(file.fileObject) // creates a temp url for the img preview
     var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
     var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
     var html = `
     <div class="photoblock" uuid="${uuid}">
-            <img src="${url}" alt="">
+            <img src="${file.data}" alt="">
             <span class="filename">${file.name}</span>
             <span class="datetime">${date} ${time}</span>
     </div>
@@ -54,7 +53,7 @@ function refreshEditor(list) {
         current.availableListObj = $(this) // sets the availableListObj property of the object to be the DOM of the photoblock in the 'Available Photos' list
         currentlyEditing.push(current)
         // console.log(currentlyEditing)
-        var html = `<img src="${URL.createObjectURL(current.fileObject)}" alt="${current.name}" uuid=${current.uuid}>`
+        var html = `<img src="${current.data}" alt="${current.name}" uuid=${current.uuid}>`
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
@@ -212,6 +211,7 @@ function startSavingListeners(){
                     sequencePosition++                }
                 photo.availableListObj.children(".filename").text(photo.name)
             })
+            saveData()
         }
     })
     $("#dateinput").on('change', function(){
@@ -228,12 +228,18 @@ function startSavingListeners(){
             var timeToShow = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
             photo.availableListObj.children(".datetime").text(dateToShow + ' ' + timeToShow)
         })
+        saveData()
     })
     $(".folder-block").on('click', function(e){
         e.stopPropagation()
         $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
-        $(this).addClass("selected-folder") // adds the selected-folder class to the current folder
+        $(this).addClass("selected-folder") // adds the selected-folder class to the current folders
+        saveData()
     })
+}
+
+function saveData(){
+    sessionStorage.setItem('photosData', JSON.stringify(photos))
 }
 
 function savePhotoLocation(photo, placeid, query){
@@ -360,14 +366,24 @@ function removeSelectedPhotos() {
     }
 }
 
-function convertFileToObject(file) {
+function getBase64(inputFile){
+    const fileReader = new FileReader();
+    return new Promise((resolve, reject) => {
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+        fileReader.readAsDataURL(inputFile);
+    });
+};
+
+async function convertFileToObject(file) {
     return {
         'lastModified'  :   file.lastModified,
         'lastModifiedDate'  :   file.lastModifiedDate,
         'name'  :   file.name,
         'size'  :   file.size,
         'type'  :   file.type,
-        'fileObject'    :   file
+        'data'  :   await getBase64(file)
     }
     // File-type object properties are read-only.
     // so, to be able to modify them, this function copies the File object data to a plain object (read-write)
@@ -572,14 +588,14 @@ async function getAltitude(lat, lng) {
     })
 }
 
-function filterNewFiles(files){
+async function filterNewFiles(files){
     var videos = []
     var audios = []
     var otherFiles = []
-    files.forEach(file => {
+    files.forEach(async file => {
         // for each file
         if (file.type.match(/image.*/)){
-            var jsonFile = convertFileToObject(file) // converts read-only File Object to standard rw object
+            var jsonFile = await convertFileToObject(file) // converts read-only File Object to standard rw object
             photos.push(jsonFile) // pushes the rw photo data to the photos array
             addPhotoBlock(jsonFile) // adds the photoblock to the 'Available Photos' list
         } else if (file.type.match(/video.*/)){
