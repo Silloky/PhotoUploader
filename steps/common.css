@@ -63,3 +63,12 @@ body {
     cursor: pointer;
     background-color: var(--hover-color);
 }
+
+#bottom-bar .disabled-btn {
+    background-color: #989898;
+}
+
+#bottom-bar .disabled-btn:hover {
+    cursor: not-allowed;
+    background-color: #989898;
+}

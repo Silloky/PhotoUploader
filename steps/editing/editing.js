@@ -211,7 +211,6 @@ function startSavingListeners(){
                     sequencePosition++                }
                 photo.availableListObj.children(".filename").text(photo.name)
             })
-            saveData()
         }
     })
     $("#dateinput").on('change', function(){
@@ -228,18 +227,12 @@ function startSavingListeners(){
             var timeToShow = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
             photo.availableListObj.children(".datetime").text(dateToShow + ' ' + timeToShow)
         })
-        saveData()
     })
     $(".folder-block").on('click', function(e){
         e.stopPropagation()
         $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
         $(this).addClass("selected-folder") // adds the selected-folder class to the current folders
-        saveData()
     })
-}
-
-function saveData(){
-    sessionStorage.setItem('photosData', JSON.stringify(photos))
 }
 
 function savePhotoLocation(photo, placeid, query){
@@ -675,9 +668,11 @@ $("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', functio
 $("#dnd").on('drop', function (e) {
     var justImportedPhotos = Array.from(e.originalEvent.dataTransfer.files) // gets the array of File Objects imported
     filterNewFiles(justImportedPhotos)
+    $("#continue-btn").removeClass('disabled-btn')
 });
 
 $("#filebrowser")[0].onchange = evt => {
     var justImportedPhotos = Array.from($("#filebrowser")[0].files) // handles files uploaded via the browser Open menu
     filterNewFiles(justImportedPhotos)
+    $("#continue-btn").removeClass('disabled-btn')
 }

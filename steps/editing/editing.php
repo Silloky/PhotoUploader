@@ -154,8 +154,8 @@
     </div>
 </div>
 <div id="bottom-bar">
-    <button type="button">Continue</button>
-    <button type="button">Go back</button>
+    <button type="button" onclick="changeStep('confirmation')" class="disabled-btn" id="continue-btn">Continue</button>
+    <button type="button" class="disabled-btn">Go back</button>
 </div>
 <?php
     include('../../modules/toasts/toasts.php');
