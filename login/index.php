@@ -83,7 +83,7 @@ if (isset($_POST)){
                     <p class="error-text"></p>
                 </div>
                 <div class="text-field">
-                    <input type="text" name="pwd" value="" placeholder=" ">
+                    <input type="password" name="pwd" value="" placeholder=" ">
                     <span class="placeholder"><?= returnText('password', $lang, $textData) ?></span>
                     <p class="error-text"></p>
                 </div>
