@@ -1,6 +1,13 @@
-const listDiv = $("#list")
+var listDiv = $("#list")
+var toEditUUID = ''
+
+function editUUID(uuid){
+    toEditUUID = uuid
+    changeStep('editing')
+}
 
 photos.forEach((photo, index) => {
+    var uuid = photo.uuid
     var url = photo.data
     var name = photo.name
     var saveLocation = '/test/path/forthe/moment'
@@ -10,7 +17,7 @@ photos.forEach((photo, index) => {
         gpsLocation = 'None'
     }
     var html = 
-    `<div class="photo">
+    `<div class="photo" uuid="${uuid}">
         <div class="photo-preview">
             <img src="${url}" alt="">
         </div>
@@ -32,7 +39,7 @@ photos.forEach((photo, index) => {
                 <span>${gpsLocation}</span>
             </div>
         </div>
-        <span class="material-symbols-rounded" class="edit-btn">edit</span>
+        <span class="material-symbols-rounded" class="edit-btn" onclick="editUUID('${uuid}')">edit</span>
     </div>`
     listDiv.append(html)
     if (index != photos.length - 1){

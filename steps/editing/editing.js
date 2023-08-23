@@ -1,8 +1,12 @@
 /// <reference path="../../lib/jquery.js"/>
 
 function addPhotoBlock(file){
-    var uuid = crypto.randomUUID() // creates a unique id for the imported photo (cannot rely on name as name might change during process)
-    file.uuid = uuid
+    if (file.uuid == undefined) {
+        var uuid = crypto.randomUUID() // creates a unique id for the imported photo (cannot rely on name as name might change during process)
+        file.uuid = uuid
+    } else {
+        var uuid = file.uuid
+    }
     var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
     var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
     var html = `
@@ -646,17 +650,32 @@ function logout(){
     }
 }
 
-let photos = Array()
-var photosBar = $("#photos")
 var selectorRunning = false
+var photosBar = $("#photos")
 var currentlyEditing = Array()
 var nullEditor = true
-let previousResults = []
-let mapLoaded = false
+var previousResults = []
+var mapLoaded = false
 var mapMarker
-const geoapifyKey = 'fe163ddccd36422baea56b816c3af0b6'
-let logoutCount = 0
+var geoapifyKey = 'fe163ddccd36422baea56b816c3af0b6'
+var logoutCount = 0
 // inits variables
+
+if (typeof photos !== 'undefined'){
+    var photosBar = $("#photos")
+    if (photos.length > 0){
+        photos.forEach(photo => {
+            addPhotoBlock(photo)
+        })
+        $("#continue-btn").removeClass('disabled-btn')
+    }
+} else {
+    var photos = Array()
+}
+
+if (typeof toEditUUID !== 'undefined' && toEditUUID != ''){
+    refreshEditor($(`[uuid='${toEditUUID}']`).addClass('selected'))
+}
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'
 
