@@ -1,0 +1,53 @@
+body {
+    display: grid;
+    grid-template-rows: 10fr 1fr;
+}
+
+#wall {
+    padding: 50px 40px;
+    width: 100%;
+    border: var(--border-color) 3 solid;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 60px;
+    column-gap: 80px;
+}
+
+.photo {
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.upload-stats {
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.percentage {
+    font-size: larger;
+    font-weight: 100;
+    position: absolute;
+}
+
+.percentage i {
+    padding-left: 2px;
+}
+
+.status {
+    text-align: center;
+    font-size: 90%;
+}
+

@@ -12,7 +12,7 @@
 </div>
 <div></div>
 <div id="bottom-bar">
-    <button type="button">Continue</button>
+    <button type="button" onclick="changeStep('upload')">Continue to upload</button>
     <button type="button" onclick="changeStep('editing')">Go back</button>
 </div>
 <?php
