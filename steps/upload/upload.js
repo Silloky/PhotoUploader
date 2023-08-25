@@ -3,6 +3,59 @@ var emptyColor = getComputedStyle(document.documentElement).getPropertyValue('--
 var successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-toast-color')
 var errorColor = getComputedStyle(document.documentElement).getPropertyValue('--error-toast-color')
 
+function initBars(){
+    $('.progress').circleProgress({
+        value: 0,
+        fill: {
+            color: successColor
+        },
+        lineCap: 'round',
+        emptyFill: emptyColor,
+        thickness: '10'
+    }).on('circle-animation-progress', function(event, progress, stepValue) {
+        var value = parseInt(stepValue*100)
+        $(this).find('span.percentage').html(value + '<i>%</i>')
+    })
+}
+
+function setText(uuid, text){
+    $(`.photo[uuid=${uuid}]`).find(".status").text(text)
+}
+
+function uploadPhoto(photo){
+    setText(photo.uuid, 'Uploading')
+    $.ajax({
+        xhr: function(){
+            var xhr = new window.XMLHttpRequest()
+            xhr.upload.addEventListener('progress', function(evt){
+                if (evt.lengthComputable) {
+                    var percentComplete = (evt.loaded / evt.total);
+                    $(`.photo[uuid=${photo.uuid}]`).find(".progress").circleProgress('value', percentComplete)
+                }
+            }, false)
+            return xhr
+        },
+        type: 'POST',
+        url: './api/receivePhoto.php',
+        data: {
+            photo: JSON.stringify(photo)
+        },
+        dataType: 'json',
+        success: function(res){
+            setText(photo.uuid, res.message)
+            if (res.type == 'error'){
+                var value = $(`.photo[uuid=${photo.uuid}]`).find(".progress").circleProgress('value');
+                $(`.photo[uuid=${photo.uuid}]`).find(".percentage").addClass('material-symbols-rounded').addClass('symbol')
+                $(`.photo[uuid=${photo.uuid}]`).find(".progress").circleProgress('value', value)
+                $(`.photo[uuid=${photo.uuid}]`).find(".progress").circleProgress({value: 1, fill: {color: errorColor}})
+                $(`.photo[uuid=${photo.uuid}]`).find(".percentage").addClass('error')
+                $(`.photo[uuid=${photo.uuid}]`).find(".percentage").text("warning")
+            } else if (res.type = 'success'){
+                processPhoto(photo.uuid)
+            }
+        }
+    })
+}
 photos.forEach((photo, index) => {
     var uuid = photo.uuid
     var url = photo.data

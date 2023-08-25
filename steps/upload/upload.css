@@ -46,6 +46,18 @@ body {
     padding-left: 2px;
 }
 
+.percentage.symbol {
+    font-size: 48px;
+}
+
+.percentage.symbol.error {
+    color: var(--error-toast-color);
+}
+
+.percentage.symbol.success {
+    color: var(--success-toast-color)
+}
+
 .status {
     text-align: center;
     font-size: 90%;
