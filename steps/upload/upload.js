@@ -56,6 +56,21 @@ function uploadPhoto(photo){
         }
     })
 }
+
+function processPhoto(uuid){
+    var sse = new EventSource('./api/processPhoto.php?uuid=' + encodeURIComponent(uuid))
+    sse.addEventListener('message', function(evt){
+        var response = JSON.parse(evt.data)
+        if (response.type = 'info'){
+            console.log(response.complex_message)
+            setText(uuid, response.message)
+        }
+    })
+    sse.addEventListener('close', function(evt){
+        sse.close()
+    })
+}
+
 photos.forEach((photo, index) => {
     var uuid = photo.uuid
     var url = photo.data
@@ -78,15 +93,4 @@ photos.forEach((photo, index) => {
     // }
 })
 
-$('.progress').circleProgress({
-    value: 0,
-    fill: {
-        color: successColor
-    },
-    lineCap: 'round',
-    emptyFill: emptyColor,
-    thickness: '10'
-}).on('circle-animation-progress', function(event, progress, stepValue) {
-    var value = parseInt(stepValue*100)
-    $(this).find('span.percentage').html(value + '<i>%</i>')
-})
+initBars()
