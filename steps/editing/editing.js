@@ -236,6 +236,10 @@ function startSavingListeners(){
         e.stopPropagation()
         $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
         $(this).addClass("selected-folder") // adds the selected-folder class to the current folders
+        var path = getPath($(this))
+        currentlyEditing.forEach(photo => {
+            photo.saveLocation = path
+        })
     })
 }
 
@@ -262,6 +266,24 @@ function mimeToExtension(file){
     }
 }
 
+function getPath(folderblock){
+    var parentNames = Array()
+    parentNames.push(folderblock.children("span").text()) // pushes the name of the current folder (which will be the parent)
+    previousParent = folderblock // sets the previous folderblock in hierarchy
+    do {
+        var currentParent = previousParent.parent().parent()
+        if (currentParent[0] != $("#folder-selector")[0]){
+            parentNames.push(currentParent.siblings(".folder-block").children("span").text()) // gets the name of the parent
+            previousParent = currentParent
+        } else {
+            break
+        }
+        //loops
+    } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]); // while the grandparent isn't #folder-selector
+    var path = "/" + parentNames.reverse().join('/') + "/" // join all the parents with '/'
+    return path
+}
+
 async function newFolder(button){
     var ul = button.parent().parent().siblings("ul.nested") // gets the current folder's ul
     ul.show() // shows it (expands folder)
@@ -270,20 +292,7 @@ async function newFolder(button){
         if (e.which == 13) { // if the key is Enter
             var newName = $(this).find("input").val() // gets the name of the new folder
             ul.children(":last-child").remove() // removes the input
-            var parentNames = Array()
-            parentNames.push(button.parent().siblings("span").text()) // pushes the name of the current folder (which will be the parent)
-            var previousParent = button.parent().parent() // sets the previous folderblock in hierarchy
-            do {
-                var currentParent = previousParent.parent().parent()
-                if (currentParent[0] != $("#folder-selector")[0]){
-                    parentNames.push(currentParent.siblings(".folder-block").children("span").text()) // gets the name of the parent
-                    previousParent = currentParent
-                } else {
-                    break
-                }
-                //loops
-            } while (currentParent.parent().parent()[0] != $("#folder-selector")[0]); // while the grandparent isn't #folder-selector
-            var path = parentNames.reverse().join('/') + "/" + newName // join all the parents with '/' and append the new name
+            var path = getPath(button.parent().parent()) + newName // join all the parents with '/' and append the new name
             postFolderCreation(path).then(res => { // send the path to ./api/createDirectory.php and wait for response
                 showToast(res) // shows toast, logs response
                 initTree() // reinit the folder selector

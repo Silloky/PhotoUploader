@@ -10,7 +10,10 @@ photos.forEach((photo, index) => {
     var uuid = photo.uuid
     var url = photo.data
     var name = photo.name
-    var saveLocation = '/test/path/forthe/moment'
+    var saveLocation = photo.saveLocation
+    if (saveLocation == undefined){
+        saveLocation = 'None'
+    }
     var date = photo.lastModifiedDate.toLocaleString('fr-FR')
     var gpsLocation = photo.gpsLocation
     if (gpsLocation == undefined){
