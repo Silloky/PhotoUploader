@@ -645,7 +645,7 @@ function logout(){
             success: function(res){
                 showToast(res)
                 setTimeout(function(){
-                    window.location.reload()
+                    window.location = './login'
                 }, 5000)
             }
         })

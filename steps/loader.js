@@ -9,3 +9,19 @@ function changeStep(step){
     var loadURL = './steps/' + step + '/' + step + '.php'
     $("body").load(loadURL)
 }
+
+window.onbeforeunload = function(event){
+    if (logoutCount == 0){
+        console.log(event)
+        return 'Are you sure you want to reload ?'
+    }
+}
+
+window.onunload = function(event){
+    if (logoutCount == 0){
+        $.ajax({
+            url: './api/emptySessionPhotos.php',
+            type: 'GET'
+        })
+    }
+}

@@ -71,6 +71,14 @@ function processPhoto(uuid){
     })
 }
 
+function tempBack(){
+    $.ajax({
+        url: './api/emptySessionPhotos.php',
+        type: 'GET'
+    })
+    changeStep('confirmation')
+}
+
 photos.forEach((photo, index) => {
     var uuid = photo.uuid
     var url = photo.data
