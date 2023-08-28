@@ -61,9 +61,11 @@ function processPhoto(uuid){
     var sse = new EventSource('./api/processPhoto.php?uuid=' + encodeURIComponent(uuid))
     sse.addEventListener('message', function(evt){
         var response = JSON.parse(evt.data)
-        if (response.type = 'info'){
+        setText(uuid, response.message)
+        if (response.type == 'info'){
             console.log(response.complex_message)
-            setText(uuid, response.message)
+        } else if (response.type == 'error'){
+            console.error(response.complex_message)
         }
     })
     sse.addEventListener('close', function(evt){
