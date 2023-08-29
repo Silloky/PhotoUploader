@@ -10,9 +10,6 @@
         
     </div>
 </div>
-<div id="bottom-bar">
-    <button type="button" onclick="tempBack()">Go back</button>
-</div>
 <?php
     include('../../modules/toasts/toasts.php');
 ?>
