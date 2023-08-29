@@ -38,13 +38,7 @@ try {
     echo "data: {$response}\n\n";
     flush();
     $file = $basePath . $photo['saveLocation'] . $photo['name'];
-    $response = json_encode(Array(
-        'type' => 'info',
-        'message' => 'Test',
-        'complex_message' => "Server Event" . $file . ":" . json_encode(file_put_contents($file, $decoded))
-    ));
-    echo "data: {$response}\n\n";
-    flush();
+    json_encode(file_put_contents($file, $decoded));
     
     usleep(1500);
     
@@ -110,7 +104,7 @@ try {
     
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Done !',
+        'message' => 'Wraping up',
         'complex_message' => "Server Event : " . $photo['name'] . " has finished processing"
     ));
     echo "data: {$response}\n\n";

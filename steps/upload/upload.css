@@ -3,6 +3,10 @@ body {
     grid-template-rows: 10fr 1fr;
 }
 
+#uploader-panel {
+    overflow-y: scroll;
+}
+
 #wall {
     padding: 50px 40px;
     width: 100%;
@@ -34,6 +38,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .percentage {

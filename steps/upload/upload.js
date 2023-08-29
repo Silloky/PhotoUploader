@@ -1,8 +1,3 @@
-var wallDiv = $("#wall")
-var emptyColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color')
-var successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-toast-color')
-var errorColor = getComputedStyle(document.documentElement).getPropertyValue('--error-toast-color')
-
 function initBars(){
     $('.progress').circleProgress({
         value: 0,
@@ -29,7 +24,7 @@ function uploadPhoto(photo){
             var xhr = new window.XMLHttpRequest()
             xhr.upload.addEventListener('progress', function(evt){
                 if (evt.lengthComputable) {
-                    var percentComplete = (evt.loaded / evt.total);
+                    var percentComplete = (evt.loaded / evt.total * 0.88);
                     $(`.photo[uuid=${photo.uuid}]`).find(".progress").circleProgress('value', percentComplete)
                 }
             }, false)
@@ -62,14 +57,34 @@ function processPhoto(uuid){
     sse.addEventListener('message', function(evt){
         var response = JSON.parse(evt.data)
         setText(uuid, response.message)
+        var value = $(`.photo[uuid=${uuid}]`).find(".progress").circleProgress('value');
         if (response.type == 'info'){
             console.log(response.complex_message)
+            $(`.photo[uuid=${uuid}]`).find(".progress").circleProgress('value', value + 0.02)
         } else if (response.type == 'error'){
             console.error(response.complex_message)
+            $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('material-symbols-rounded').addClass('symbol')
+            $(`.photo[uuid=${uuid}]`).find(".progress").circleProgress('value', value)
+            $(`.photo[uuid=${uuid}]`).find(".progress").circleProgress({value: value, fill: {color: errorColor}})
+            $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('error')
+            $(`.photo[uuid=${uuid}]`).find(".percentage").html("warning")
         }
     })
     sse.addEventListener('close', function(evt){
         sse.close()
+        if ($(`.photo[uuid=${uuid}]`).find(".percentage").text() != "warning"){
+            setTimeout(function(){
+                setText(uuid, 'Done !')
+                $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('material-symbols-rounded').addClass('symbol')
+                $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('success')
+                console.log($(`.photo[uuid=${uuid}]`).find(".percentage"))
+                $(`.photo[uuid=${uuid}]`).find(".percentage").html("done_all")
+                if (typeof photos[uploadedIndex] !== 'undefined'){
+                    uploadPhoto(photos[uploadedIndex])
+                    uploadedIndex++
+                }
+            }, 3000)
+        }
     })
 }
 
@@ -80,6 +95,13 @@ function tempBack(){
     })
     changeStep('confirmation')
 }
+
+var wallDiv = $("#wall")
+var emptyColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color')
+var successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-toast-color')
+var errorColor = getComputedStyle(document.documentElement).getPropertyValue('--error-toast-color')
+var maxSimultaneousUploads = 2
+var uploadedIndex = 0
 
 photos.forEach((photo, index) => {
     var uuid = photo.uuid
@@ -104,3 +126,12 @@ photos.forEach((photo, index) => {
 })
 
 initBars()
+
+setTimeout(function(){
+    for (let i = 0; i < maxSimultaneousUploads; i++) {
+        if (typeof photos[uploadedIndex] !== 'undefined'){
+            uploadPhoto(photos[uploadedIndex])
+            uploadedIndex++
+        }
+    }
+}, 1000)
