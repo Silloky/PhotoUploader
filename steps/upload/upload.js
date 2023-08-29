@@ -17,7 +17,7 @@ function setText(uuid, text){
     $(`.photo[uuid=${uuid}]`).find(".status").text(text)
 }
 
-function uploadPhoto(photo){
+async function uploadPhoto(photo){
     setText(photo.uuid, 'Uploading')
     $.ajax({
         xhr: function(){
@@ -72,19 +72,42 @@ function processPhoto(uuid){
     })
     sse.addEventListener('close', function(evt){
         sse.close()
-        if ($(`.photo[uuid=${uuid}]`).find(".percentage").text() != "warning"){
-            setTimeout(function(){
+        setTimeout(function(){
+            if ($(`.photo[uuid=${uuid}]`).find(".percentage").text() != "warning"){
                 setText(uuid, 'Done !')
                 $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('material-symbols-rounded').addClass('symbol')
                 $(`.photo[uuid=${uuid}]`).find(".percentage").addClass('success')
-                console.log($(`.photo[uuid=${uuid}]`).find(".percentage"))
                 $(`.photo[uuid=${uuid}]`).find(".percentage").html("done_all")
-                if (typeof photos[uploadedIndex] !== 'undefined'){
-                    uploadPhoto(photos[uploadedIndex])
-                    uploadedIndex++
+            } else {
+                wasUploadError = true
+            }
+            if (noMoreToUpload){
+                if (!wasUploadError){
+                    var endToast = {
+                        type: 'success',
+                        message: 'All photos were successfully uploaded ! Redirecting you in 5 seconds...',
+                        complex_message: 'Success : all photos were correctly uploaded and processed. User will be redrected to initial "editing" page in 5 seconds...'
+                    }
+                    showToast(endToast)
                 }
-            }, 3000)
-        }
+                // logoutCount = 0
+                $.ajax({
+                    url: './api/emptySessionPhotos.php',
+                    type: 'GET',
+                    success: function(){
+                        setTimeout(function(){
+                            window.location.reload()
+                        }, 5000)
+                    }
+                })
+            } else if (typeof photos[uploadedIndex] !== 'undefined'){
+                uploadPhoto(photos[uploadedIndex])
+                uploadedIndex++
+            } else {
+                noMoreToUpload = true
+            }
+            $($(`.photo[uuid=${uuid}]`).find(".progress").circleProgress('widget')).stop();
+        }, 3000)
     })
 }
 
@@ -102,6 +125,8 @@ var successColor = getComputedStyle(document.documentElement).getPropertyValue('
 var errorColor = getComputedStyle(document.documentElement).getPropertyValue('--error-toast-color')
 var maxSimultaneousUploads = 2
 var uploadedIndex = 0
+var noMoreToUpload = false
+var wasUploadError = false
 
 photos.forEach((photo, index) => {
     var uuid = photo.uuid
@@ -132,6 +157,8 @@ setTimeout(function(){
         if (typeof photos[uploadedIndex] !== 'undefined'){
             uploadPhoto(photos[uploadedIndex])
             uploadedIndex++
+        } else {
+            noMoreToUpload = true
         }
     }
 }, 1000)

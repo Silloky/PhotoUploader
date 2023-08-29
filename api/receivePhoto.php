@@ -27,8 +27,8 @@ try {
     array_push($_SESSION['photos'], $photo);
 
     $response = Array(
-        'type' => '',
-        'message' => 'Successfully uploaded',
+        'type' => 'success',
+        'message' => 'Uploading...',
         'complex_message' => 'Photo ' . $photo['name'] . ' has been successfully saved in $_SESSION'
     );
     echo json_encode($response);

@@ -11,7 +11,7 @@ header('Cache-Control: no-cache');
 $uuid = $_GET['uuid'];
 $basePath = '/media';
 
-foreach ($_SESSION['photos'] as $photo){
+foreach ($_SESSION['photos'] as $index=>$photo){
     if ($photo['uuid'] == $uuid){
         break;
     }
@@ -22,7 +22,7 @@ try {
     
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Decoding',
+        'message' => 'Decoding...',
         'complex_message' => "Server Event : Decoding base64 string of image " . $photo['name']
     ));
     echo "data: {$response}\n\n";
@@ -32,12 +32,16 @@ try {
     
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Saving photo on server',
+        'message' => 'Saving photo on server...',
         'complex_message' => "Server Event : " . $photo['name'] . " is being saved in " . $basePath . $photo['saveLocation'] 
     ));
     echo "data: {$response}\n\n";
     flush();
-    $file = $basePath . $photo['saveLocation'] . $photo['name'];
+    if ($photo['saveLocation'] != null){
+        $file = $basePath . $photo['saveLocation'] . $photo['name'];
+    } else {
+        $file = $basePath . '/Unclassified' . $photo['name'];
+    }
     json_encode(file_put_contents($file, $decoded));
     
     usleep(1500);
@@ -46,20 +50,20 @@ try {
     $newEpoch = $photo['lastModified'] / 1000;
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Setting new date',
+        'message' => 'Setting new date...',
         'complex_message' => "Server Event : setting user-defined date for " . $photo['name']
     ));
     echo "data: {$response}\n\n";
     flush();
     $date = date('Y:m:d G:i:s', $newEpoch);
-    shell_exec("exiftool '-DateTimeOriginal={$date}' '-TimeCreated={$date}' '-DateCreated={$date}' '{$file}'");
+    shell_exec("exiftool '-DateTimeOriginal={$date}' '-TimeCreated={$date}' '-DateCreated={$date}' \"{$file}\"");
     sleep(1);
     
     if (isset($photo['gpsLocation'])){
         $response = json_encode(Array(
             'type' => 'info',
-            'message' => 'Setting GPS Location',
-            'complex_message' => "Server Event : Seeting GPS location of " . $photo['name']
+            'message' => 'Setting GPS Location...',
+            'complex_message' => "Server Event : Seting GPS location of " . $photo['name']
         ));
         echo "data: {$response}\n\n";
         flush();
@@ -77,7 +81,7 @@ try {
         } else {
             $longRef = 'W';
         }
-        $gpsCommand = "exiftool -GPSLatitude={$place['latitude']} -GPSLatitudeRef={$latRef} -GPSLongitude={$place['longitude']} -GPSLongitudeRef={$longRef} -GPSAltitude={$place['altitude']} -GPSAltitudeRef='Above Sea Level' '{$file}'";
+        $gpsCommand = "exiftool -GPSLatitude={$place['latitude']} -GPSLatitudeRef={$latRef} -GPSLongitude={$place['longitude']} -GPSLongitudeRef={$longRef} -GPSAltitude={$place['altitude']} -GPSAltitudeRef='Above Sea Level' \"{$file}\"";
         shell_exec($gpsCommand);
     } else {
         $response = json_encode(Array(
@@ -93,18 +97,18 @@ try {
     
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Wraping up',
+        'message' => 'Wraping up...',
         'complex_message' => "Server Event : Finishing up for " . $photo['name']
     ));
     echo "data: {$response}\n\n";
     flush();
-    shell_exec("rm '{$file}_original'");
-    
+    shell_exec("rm \"{$file}_original\"");
+    unset($_SESSION['photos'][$index]);
     sleep(2);
     
     $response = json_encode(Array(
         'type' => 'info',
-        'message' => 'Wraping up',
+        'message' => 'Wraping up...',
         'complex_message' => "Server Event : " . $photo['name'] . " has finished processing"
     ));
     echo "data: {$response}\n\n";
@@ -112,11 +116,10 @@ try {
 } catch (\Throwable $th) {
     $response = json_encode(Array(
         'type' => 'error',
-        'message' => 'Error',
+        'message' => 'Error !',
         'complex_message' => 'Server Event for ' . $photo['name'] . ' : ' . $th->getMessage()
     ));
 }
-
 
 
 echo "event: close\n";
