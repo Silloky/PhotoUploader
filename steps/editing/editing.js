@@ -474,6 +474,7 @@ async function updatePlaceSearchResults(query){
         $("#no-search").show()
         $("#results").children().remove()
         $("#results").hide()
+        $("#no-results").hide()
         previousResults = []
     } else {
         var results = await getSearchResults(query)
@@ -481,6 +482,7 @@ async function updatePlaceSearchResults(query){
             $("#no-results").show()
             $("#results").children().remove()
             $("#results").hide()
+            $("#no-search").hide();
         } else {
             if (previousResults != results){
                 $("#results").children().remove()
@@ -501,6 +503,7 @@ async function updatePlaceSearchResults(query){
                 })
                 $("#search-result-box").children().hide()
                 $("#results").show()
+                $("#no-results").hide()
             }
         }
         previousResults = results
