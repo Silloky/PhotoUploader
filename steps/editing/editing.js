@@ -237,6 +237,10 @@ function startSavingListeners(){
             photo.availableListObj.children(".datetime").text(dateToShow + ' ' + timeToShow)
         })
     })
+    startPathSavingListener()
+}
+
+function startPathSavingListener(){
     $(".folder-block").on('click', function(e){
         e.stopPropagation()
         $("#folder-selector").find(".selected-folder").toggleClass("selected-folder") // removes the selected-folder class from previously selected folders
@@ -291,6 +295,12 @@ function getPath(folderblock){
 
 async function newFolder(button){
     var ul = button.parent().parent().siblings("ul.nested") // gets the current folder's ul
+    if (ul.length == 0){
+        button.parent().parent().parent().append('<ul class="nested" style="display: none;"></ul>')
+        button.parent().parent().parent().addClass('icon')
+        button.parent().parent().parent().css('list-style', '\'\\e2c7\  \'')
+        newFolder(button)
+    }
     ul.show() // shows it (expands folder)
     button.parent().siblings(".folder-name").css('list-style', '\'\\e2c8\  \'') // sets the folde ricon to be 'open'
     ul.append('<li><div class="folder-block"><input type="text" name="newfoldername" placeholder="New Folder Name"></div></li>').focus().on('keyup', function(e) { // creates input for user to enter new folder name, and binds to keyup
@@ -300,7 +310,9 @@ async function newFolder(button){
             var path = getPath(button.parent().parent()) + newName // join all the parents with '/' and append the new name
             postFolderCreation(path).then(res => { // send the path to ./api/createDirectory.php and wait for response
                 showToast(res) // shows toast, logs response
-                initTree() // reinit the folder selector
+                initTree().then(function(){
+                    startPathSavingListener()
+                }) // reinit the folder selector
             })
         }
     })
