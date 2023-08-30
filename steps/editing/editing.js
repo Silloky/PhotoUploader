@@ -688,12 +688,12 @@ if (typeof toEditUUID !== 'undefined' && toEditUUID != ''){
 
 $("#photo-panel-big").hide(); // hides 'Available Photos'
 
-$("#dnd").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+$("#photos").on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
     e.preventDefault(); // prevents the default behaviour with drag n drop, which is to open the dropped object in a new tab
     e.stopPropagation();
 });
 
-$("#dnd").on('drop', function (e) {
+$("#photos").on('drop', function (e) {
     var justImportedPhotos = Array.from(e.originalEvent.dataTransfer.files) // gets the array of File Objects imported
     filterNewFiles(justImportedPhotos)
     $("#continue-btn").removeClass('disabled-btn')
