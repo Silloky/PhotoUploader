@@ -34,6 +34,8 @@ if (!(array_key_exists('step', $_SESSION))){
     <link rel="stylesheet" href="./steps/common.css">
 </head>
 <body>
-
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
 </body>
 </html>

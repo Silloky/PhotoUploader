@@ -161,4 +161,4 @@ setTimeout(function(){
             noMoreToUpload = true
         }
     }
-}, 1000)
+}, 4000)
