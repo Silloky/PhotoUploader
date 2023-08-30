@@ -18,8 +18,7 @@ foreach ($_SESSION['photos'] as $index=>$photo){
 }
 
 try {
-    sleep(1);
-    
+
     $response = json_encode(Array(
         'type' => 'info',
         'message' => 'Decoding...',

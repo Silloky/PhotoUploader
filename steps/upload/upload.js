@@ -85,8 +85,8 @@ function processPhoto(uuid){
                 if (!wasUploadError){
                     var endToast = {
                         type: 'success',
-                        message: 'All photos were successfully uploaded ! Redirecting you in 5 seconds...',
-                        complex_message: 'Success : all photos were correctly uploaded and processed. User will be redrected to initial "editing" page in 5 seconds...'
+                        message: 'All photos were successfully uploaded ! Redirecting you in 10 seconds...',
+                        complex_message: 'Success : all photos were correctly uploaded and processed. User will be redirected to initial "editing" page in 10 seconds...'
                     }
                     showToast(endToast)
                 }
@@ -97,7 +97,7 @@ function processPhoto(uuid){
                     success: function(){
                         setTimeout(function(){
                             window.location.reload()
-                        }, 5000)
+                        }, 10000)
                     }
                 })
             } else if (typeof photos[uploadedIndex] !== 'undefined'){
