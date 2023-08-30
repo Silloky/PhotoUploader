@@ -4,7 +4,7 @@ if (sessionStorage.getItem('step') == null){
 $.get('./steps/editing/editing.php', function(data){
     $("body").append($(data).hide())
     setTimeout(function(){
-        $("body").children().not("link, script").show()
+        $("body").children().not("link, script, #toast-hider").show()
         $("#loader").fadeTo("slow", 0, function(){
             $("#loader").hide()
         })
@@ -19,7 +19,7 @@ function changeStep(step){
         $.get(loadURL, function(data){
             $("body").append($(data).hide())
             setTimeout(function(){
-                $("body").children().not("link, script").show()
+                $("body").children().not("link, script, #toast-hider").show()
                 $("#loader").fadeTo("slow", 0, function(){
                     $("#loader").hide()
                 })

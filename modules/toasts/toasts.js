@@ -76,7 +76,3 @@ async function copyToastMessage(button) {
         }
     });
 }
-
-setTimeout(() => {
-    $("#toast-hider").hide()
-}, 2000); // show the toast hider for 2 seconds (prevents flashing due to toast animation)
