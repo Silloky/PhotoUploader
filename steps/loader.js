@@ -12,7 +12,6 @@ function changeStep(step){
 
 window.onbeforeunload = function(event){
     if (logoutCount == 0){
-        console.log(event)
         return 'Are you sure you want to reload ?'
     }
 }

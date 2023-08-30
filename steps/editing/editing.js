@@ -49,8 +49,13 @@ function refreshEditor(list) {
     $("ul#results").hide()
     $("ul#results").children().remove()
     var currentlyEditingBlocks = list // array of DOM elements
-    if (currentlyEditing != []){
-        currentlyEditing = Array() // complex object
+    if (currentlyEditing.length != 0){
+        currentlyEditing = Array()
+    }
+    if (currentlyEditingBlocks.length == 0){
+        $("#editor-null").show() // shows the default editor pane
+        $("#real-editor").hide() // and hides the actual useful one
+        nullEditor = true
     }
     currentlyEditingBlocks.each(function() {
         var current = photos.find(photo => photo.uuid === $(this).attr('uuid')) // gets the corresponding photo in the imported photos list
