@@ -7,8 +7,8 @@ function addPhotoBlock(file){
     } else {
         var uuid = file.uuid
     }
-    var date = file.lastModifiedDate.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
-    var time = file.lastModifiedDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
+    var date = new Date(file.lastModified).toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
+    var time = new Date(file.lastModified).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
     var html = `
     <div class="photoblock" uuid="${uuid}">
             <img src="${file.data}" alt="">
@@ -100,7 +100,7 @@ function setOriginalPhotosData() {
     var gpsLocations = []
     currentlyEditing.forEach(photo => {
         names.push(photo.name)
-        dates.push(photo.lastModifiedDate.toLocaleDateString("fr-FR"))
+        dates.push(new Date(photo.lastModified).toLocaleDateString("fr-FR"))
         queries.push(photo.placeSearchQuery)
         gpsLocations.push(photo.gpsLocation)
     })
@@ -224,13 +224,16 @@ function startSavingListeners(){
     })
     $("#dateinput").on('change', function(){
         var date = $.dateSelect.defaults.parseDate($(this).val())
+        console.log(date)
         currentlyEditing.forEach(photo => {
-            const originalDate = photo.lastModifiedDate
+            const originalDate = new Date(photo.lastModified)
+            console.log(originalDate)
             date.setHours(originalDate.getHours());
             date.setMinutes(originalDate.getMinutes());
             date.setSeconds(originalDate.getSeconds());
             date.setMilliseconds(originalDate.getMilliseconds());
-            photo.lastModifiedDate = date
+            console.log(date)
+            photo.lastModified = date
             photo.lastModified = date.getTime()
             var dateToShow = date.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
             var timeToShow = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})                 // and time
@@ -402,7 +405,6 @@ function getBase64(inputFile){
 async function convertFileToObject(file) {
     return {
         'lastModified'  :   file.lastModified,
-        'lastModifiedDate'  :   file.lastModifiedDate,
         'name'  :   file.name,
         'size'  :   file.size,
         'type'  :   file.type,

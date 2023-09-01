@@ -14,7 +14,7 @@ photos.forEach((photo, index) => {
     if (saveLocation == undefined){
         saveLocation = 'None'
     }
-    var date = photo.lastModifiedDate.toLocaleString('fr-FR')
+    var date = new Date(photo.lastModified).toLocaleString('fr-FR')
     var gpsLocation = photo.gpsLocation
     if (gpsLocation == undefined){
         gpsLocation = 'None'
