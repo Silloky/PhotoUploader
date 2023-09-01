@@ -15,11 +15,12 @@ function returnText($sentenceID, $lang, $data){
 
 $textData = json_decode(file_get_contents('./text.json'), true);
 
-if (isset($_COOKIE['lang'])){
+if (array_key_exists('lang', $_COOKIE)){
     $lang = $_COOKIE['lang'];
 } else {
-    setcookie('lang', 'english', strtotime("+1 year"), '../');
+    setcookie('lang', 'english', strtotime("+1 year"), '/');
     header("Refresh:0");
+    die();
 }
 
 if (isset($_POST)){
