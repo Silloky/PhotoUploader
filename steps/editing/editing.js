@@ -75,10 +75,13 @@ function refreshEditor(list) {
         element: dateinput, // binds it to the input
         container: '#date-section' // sets #date-section as its parent
     });
+    dateinput.trigger('click') // clicks the input to show the selector
     $("#date-overlay").on('click', function(){
         $("#date-overlay").hide()
     })
-    dateinput.trigger('click') // clicks the input to show the selector
+    $("#date-overlay").on('hover', function(evt){
+        evt.stopPropagation()
+    })
     if (!mapLoaded){
         var map = L.map('map').setView([46.767709937459294, 2.43165930707079], 5.5)
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -224,15 +227,12 @@ function startSavingListeners(){
     })
     $("#dateinput").on('change', function(){
         var date = $.dateSelect.defaults.parseDate($(this).val())
-        console.log(date)
         currentlyEditing.forEach(photo => {
             const originalDate = new Date(photo.lastModified)
-            console.log(originalDate)
             date.setHours(originalDate.getHours());
             date.setMinutes(originalDate.getMinutes());
             date.setSeconds(originalDate.getSeconds());
             date.setMilliseconds(originalDate.getMilliseconds());
-            console.log(date)
             photo.lastModified = date
             photo.lastModified = date.getTime()
             var dateToShow = date.toLocaleDateString([], {year: '2-digit', month: '2-digit', day: '2-digit'}) // formats date...
