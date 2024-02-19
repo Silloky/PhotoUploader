@@ -59,90 +59,92 @@
                 </div>
             </div>
             <div style="height: 20px; visibility: hidden;"></div>
-            <div id="metadata" class="editor-category">
-                <div class="editor-category-titles">Metadata</div>
-                <div id="date-section">
+            <div id="date" class="editor-category">
+                <div class="editor-category-titles">Date</div>
+                <div id="date-selector-wrapper">
                     <input type="text" id="dateinput" style="display: none;">
                     <div class="element-information" style="display: none;">
                         <span class="material-symbols-rounded">info</span>
                         <span>Multiple values default to 01/01/1970</span>
                     </div>
                 </div>
-                <div id="location">
-                    <div id="existing-place">
-                        <div class="text-field">
-                            <input type="text" name="placename" value="" placeholder=" ">
-                            <span class="placeholder">Search for presaved place here</span>
-                            <p class="error-text"></p>
-                        </div>
-                        <div id="search-result-box" class="scrollbarhidden">
-                            <div id="no-search">
-                                <div class="search-null-box">
-                                    <span class="material-symbols-rounded">north</span>
-                                    <span>Search above the find pre-existing places</span>
-                                </div>
+            </div>
+            <div style="height: 20px; visibility: hidden;"></div>
+            <div id="location" class="editor-category">
+                <div class="editor-category-titles">Location</div>
+                <div id="existing-place">
+                    <div class="text-field">
+                        <input type="text" name="placename" value="" placeholder=" ">
+                        <span class="placeholder">Search for presaved place here</span>
+                        <p class="error-text"></p>
+                    </div>
+                    <div id="search-result-box" class="scrollbarhidden">
+                        <div id="no-search">
+                            <div class="search-null-box">
+                                <span class="material-symbols-rounded">north</span>
+                                <span>Search above the find pre-existing places</span>
                             </div>
-                            <ul id="results" style="display: none;">
-                            </ul>
-                            <div id="no-results" style="display: none;">
-                                <div class="search-null-box">
-                                    <span class="material-symbols-rounded">not_listed_location</span>
-                                    <span>Your search returned no results...</span>
-                                    <span>Please search using other word or create a new location below.</span>
-                                </div>
+                        </div>
+                        <ul id="results" style="display: none;">
+                        </ul>
+                        <div id="no-results" style="display: none;">
+                            <div class="search-null-box">
+                                <span class="material-symbols-rounded">not_listed_location</span>
+                                <span>Your search returned no results...</span>
+                                <span>Please search using other word or create a new location below.</span>
                             </div>
                         </div>
                     </div>
-                    <span id="locationoptions-or">or create a new location</span>
-                    <div id="new-place">
-                        <div id="map"></div>
-                        <div class="element-information">
-                            <span class="material-symbols-rounded">info</span>
-                            <span>Click on map to place marker</span>
+                </div>
+                <span id="locationoptions-or">or create a new location</span>
+                <div id="new-place">
+                    <div id="map"></div>
+                    <div class="element-information">
+                        <span class="material-symbols-rounded">info</span>
+                        <span>Click on map to place marker</span>
+                    </div>
+                    <div id="place-creator" style="display: none;">
+                        <div class="text-field">
+                            <input type="text" name="place-id" value="" placeholder=" ">
+                            <span class="placeholder">Place ID</span>
+                            <p class="error-text"></p>
                         </div>
-                        <div id="place-creator" style="display: none;">
-                            <div class="text-field">
-                                <input type="text" name="place-id" value="" placeholder=" ">
-                                <span class="placeholder">Place ID</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="place-name-en" value="" placeholder=" ">
-                                <span class="placeholder">Place Name (EN)</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="place-name-fr" value="" placeholder=" ">
-                                <span class="placeholder">Place Name (FR)</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="address-line-1" value="" placeholder=" ">
-                                <span class="placeholder">Address first line</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="address-line-2" value="" placeholder=" ">
-                                <span class="placeholder">Address second line</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="postal" value="" placeholder=" ">
-                                <span class="placeholder">Postal Code</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="city" value="" placeholder=" ">
-                                <span class="placeholder">City name</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <div class="text-field">
-                                <input type="text" name="country" value="" placeholder=" ">
-                                <span class="placeholder">Country</span>
-                                <p class="error-text"></p>
-                            </div>
-                            <button type="submit" id="submit-new-place" onclick="submitNewPlace($(this).attr('lat'), $(this).attr('lng'))">Create place and select it</button>
+                        <div class="text-field">
+                            <input type="text" name="place-name-en" value="" placeholder=" ">
+                            <span class="placeholder">Place Name (EN)</span>
+                            <p class="error-text"></p>
                         </div>
+                        <div class="text-field">
+                            <input type="text" name="place-name-fr" value="" placeholder=" ">
+                            <span class="placeholder">Place Name (FR)</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <div class="text-field">
+                            <input type="text" name="address-line-1" value="" placeholder=" ">
+                            <span class="placeholder">Address first line</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <div class="text-field">
+                            <input type="text" name="address-line-2" value="" placeholder=" ">
+                            <span class="placeholder">Address second line</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <div class="text-field">
+                            <input type="text" name="postal" value="" placeholder=" ">
+                            <span class="placeholder">Postal Code</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <div class="text-field">
+                            <input type="text" name="city" value="" placeholder=" ">
+                            <span class="placeholder">City name</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <div class="text-field">
+                            <input type="text" name="country" value="" placeholder=" ">
+                            <span class="placeholder">Country</span>
+                            <p class="error-text"></p>
+                        </div>
+                        <button type="submit" id="submit-new-place" onclick="submitNewPlace($(this).attr('lat'), $(this).attr('lng'))">Create place and select it</button>
                     </div>
                 </div>
             </div>

@@ -73,7 +73,7 @@ function refreshEditor(list) {
     var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
         element: dateinput, // binds it to the input
-        container: '#date-section' // sets #date-section as its parent
+        container: '#date-selector-wrapper' // sets #date as its parent
     });
     dateinput.trigger('click') // clicks the input to show the selector
     $("#date-overlay").on('click', function(){
@@ -136,10 +136,10 @@ function setOriginalPhotosData() {
     var dateinput = $("#dateinput")
     if (dates.every((val, i, arr) => val === arr[0])){
         dateinput.val(dates[0])
-        $("#date-information").hide()
+        $("#date .element-information").hide()
     } else {
         dateinput.val('01/01/1970')
-        $("#date-information").show()
+        $("#date .element-information").show()
     }
 
     if (queries.every((val, i, arr) => val === arr[0]) && gpsLocations.every((val, i, arr) => val === arr[0])){
