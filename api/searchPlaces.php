@@ -1,10 +1,13 @@
 <?php
 
-$query = $_GET['q'];
+$query = $_GET['q'] ?? null;
 
-$search = str_replace(' ', ' +', ("+" . $query . "*"));
-
-$sql = "SELECT * FROM places WHERE MATCH(`name_en`,`name_fr`,`address`) AGAINST ('$search' IN BOOLEAN MODE)";
+if ($query == "*") {
+    $sql = "SELECT * FROM places";
+} else {
+    $search = str_replace(' ', ' +', ("+" . $query . "*"));
+    $sql = "SELECT * FROM places WHERE MATCH(`name_en`,`name_fr`,`address`) AGAINST ('$search' IN BOOLEAN MODE)";
+}
 
 require('../dbconfig.php');
 $result = mysqli_query($conn,$sql);
