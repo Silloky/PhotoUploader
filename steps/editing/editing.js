@@ -48,6 +48,7 @@ function refreshEditor(list) {
     $("#no-search").show()
     $("ul#results").hide()
     $("ul#results").children().remove()
+
     var currentlyEditingBlocks = list // array of DOM elements
     if (currentlyEditing.length != 0){
         currentlyEditing = Array()
@@ -57,6 +58,7 @@ function refreshEditor(list) {
         $("#real-editor").hide() // and hides the actual useful one
         nullEditor = true
     }
+
     currentlyEditingBlocks.each(function() {
         var current = photos.find(photo => photo.uuid === $(this).attr('uuid')) // gets the corresponding photo in the imported photos list
         current.availableListObj = $(this) // sets the availableListObj property of the object to be the DOM of the photoblock in the 'Available Photos' list
@@ -66,10 +68,11 @@ function refreshEditor(list) {
         // console.log(html)
         current.editingListObj = $("#preview").append(html).children(":last-child") // sets the editingListObj property of the object to be the DOM of the preview block in the 'Currently Edidting' pane
     })
+    
     $("input[name='placename']").on('keydown keyup', function(){
         updatePlaceSearchResults(this.value)
     })
-    setOriginalPhotosData()
+    loadPhotoData()
     var dateinput = $("#dateinput") // input with date in text form
     $.dateSelect.show({ // starts the date selector
         element: dateinput, // binds it to the input
@@ -96,10 +99,10 @@ function refreshEditor(list) {
     }) // inits the directory structure selector
 }
 
-function setOriginalPhotosData() {
-    var names = []
-    var dates = []
-    var queries = []
+function loadPhotoData() {
+    var names = [] // done
+    var dates = [] // done
+    var queries = [] // 
     var gpsLocations = []
     currentlyEditing.forEach(photo => {
         names.push(photo.name)
@@ -110,17 +113,20 @@ function setOriginalPhotosData() {
 
     var simpleNames = []
     if (names.length == 1){
-        simpleNames.push(names[0].match(/([a-zA-Z0-9_\s])*/)[0].slice(0, -1))
+        // simpleNames.push(names[0].match(/([\p{L}\s])*/)[0].slice(0, -1))
+        simpleNames.push(names[0].match(/([\p{L}\s\p{N}.()]+)(\s\(\d\))?\.[A-Za-z]{3,4}/u)[1])
     } else {
         names.forEach(name => {
-            var sequentialResults = name.match(/(([a-zA-Z0-9\s_-]+)\s\(\d\).([a-zA-Z]{3,4}))/)
+            var sequentialResults = name.match(/([\p{L}\s]+)\s\(\d\)\.[a-zA-Z]{3,4}/u)
+            console.log(sequentialResults)
             if (sequentialResults != null){
-                simpleNames.push(sequentialResults[2])
+                simpleNames.push(sequentialResults[1])
             } else {
                 simpleNames.push('no match')
             }
         })
     }
+    console.log(simpleNames)
     if (simpleNames.every((val, i, arr) => val === arr[0]) && simpleNames[0] != 'no match'){
         $("input[name='filename']").val(simpleNames[0])
     } else {
@@ -154,21 +160,23 @@ function setOriginalPhotosData() {
     }
 
 
+
+
 }
 
 function getSequentialNames(name, nElements) {
     let regex = new RegExp(`${name}\\s\\((\\d{1,3})\\).[a-zA-Z]{3}`)
-    // console.log('Regex :')
-    // console.log(regex)
+    console.log('Regex :')
+    console.log(regex)
     var namedAlike = photos.filter(item => item.name.match(regex))
-    // console.log('Existing photos :')
-    // console.log(namedAlike)
+    console.log('Existing photos :')
+    console.log(namedAlike)
     var existingIndices = []
     namedAlike.forEach(photo => {
         existingIndices.push(parseInt(photo.name.match(regex)[1]))
     })
-    // console.log('Existing Indices :')
-    // console.log(existingIndices)
+    console.log('Existing Indices :')
+    console.log(existingIndices)
     var missingIndices = []
     var newIndices = []
     if (existingIndices.length > 0){
@@ -183,18 +191,18 @@ function getSequentialNames(name, nElements) {
         var nNewIndices = nElements - 1
         var valueNewStart = 1
     }
-    // console.log('Missing Indices :')
-    // console.log(missingIndices)
+    console.log('Missing Indices :')
+    console.log(missingIndices)
     for (var i = 0; i <= nNewIndices; i++){
         newIndices.push(valueNewStart)
         valueNewStart++
     }
-    // console.log('New Indices :')
-    // console.log(newIndices)
+    console.log('New Indices :')
+    console.log(newIndices)
     var result = missingIndices.concat(newIndices)
-    // console.log('Final result :')
-    // console.log(result)
-    // console.log('========================================')
+    console.log('Final result :')
+    console.log(result)
+    console.log('========================================')
     return result
 }
 
@@ -220,7 +228,8 @@ function startSavingListeners(){
                     }
                 } else {
                     photo.name = name + ' (' + sequentialNames[sequencePosition] + ')' + mimeToExtension(photo)
-                    sequencePosition++                }
+                    sequencePosition++
+                }
                 photo.availableListObj.children(".filename").text(photo.name)
             })
         }
