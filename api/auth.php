@@ -38,7 +38,6 @@ function login($conn, $jwtKey){
         if ($result->num_rows > 0){
             $hash = (mysqli_fetch_assoc($result))['pwd'];
             if (password_verify($pwd, $hash)){
-                $_SESSION['connected'] = true;
                 $_SESSION['username'] = $username;
                 $exp = 60;
                 $jwt = Token::create($username, $jwtKey, (time() + $exp), $_SERVER['SERVER_NAME']);

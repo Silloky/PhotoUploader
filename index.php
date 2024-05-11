@@ -4,14 +4,6 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-if (!(array_key_exists('connected',$_SESSION))){
-    header('Location: ./login');
-} else {
-    if (!($_SESSION['connected'])){
-        header('Location: ./login');
-    }
-}
-
 if (!(array_key_exists('step', $_SESSION))){
     $_SESSION['step'] = 'editing';
 }
