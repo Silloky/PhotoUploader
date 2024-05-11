@@ -333,7 +333,7 @@ function postFolderCreation(path){
             success: function(res) {
                 resolve(res)
             },
-            error: function(){
+            error: function(jqxhr){
                 if (jqxhr.status == 401){
                     reauth()
                 }
@@ -376,7 +376,7 @@ function postFolderDeletion(path){
             success: function(res) {
                 resolve(res)
             },
-            error: function(){
+            error: function(jqxhr){
                 if (jqxhr.status == 401){
                     reauth()
                 }
@@ -460,7 +460,7 @@ async function initTree() {
                 $(this).parent().parent().parent().css('list-style', '\'\\e2c7\  \'') // changes list-style icon to indicate closed folder
             })
         },
-        error: function(){
+        error: function(jqxhr){
             if (jqxhr.status == 401){
                 reauth()
             }
@@ -494,7 +494,7 @@ function getSearchResults(query){
             success: function(res) {
                 resolve(res)
             },
-            error: function(){
+            error: function(jqxhr){
                 if (jqxhr.status == 401){
                     reauth()
                 }
@@ -608,7 +608,7 @@ async function submitNewPlace(lat, lng){
         success: function(res) {
             return res
         },
-        error: function(){
+        error: function(jqxhr){
             if (jqxhr.status == 401){
                 reauth()
             }

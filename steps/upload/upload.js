@@ -49,7 +49,7 @@ async function uploadPhoto(photo){
                 processPhoto(photo.uuid)
             }
         },
-        error: function(){
+        error: function(jqxhr){
             if (jqxhr.status == 401){
                 reauth()
             }
