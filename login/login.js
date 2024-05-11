@@ -9,7 +9,7 @@ async function login(){
     let pwd = $('input[name="pwd"]').val()
 
     var res = await $.ajax({
-        url: "../api/auth.php",
+        url: window.location.origin+"/api/auth.php",
         type: 'POST',
         data: {
             action: 'login',
@@ -25,7 +25,7 @@ async function login(){
     console.log(res)
     if (res.type == 'token'){
         document.cookie = "jwt="+encodeURIComponent(res.token)+"; secure; ; path=/"
-        window.location = "../"
+        if (!modal) {window.location = "../"}
     } else {
         showToast(res.toastData)
     }
