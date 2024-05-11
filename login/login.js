@@ -30,3 +30,10 @@ async function login(){
         showToast(res.toastData)
     }
 }
+
+$('input[name="pwd"]').on("keyup", function(evt){
+    if (evt.which == 13){
+        evt.preventDefault()
+        login()
+    }
+})
