@@ -23,34 +23,6 @@ if (array_key_exists('lang', $_COOKIE)){
     die();
 }
 
-if (isset($_POST)){
-    if (isset($_POST['action'])){
-        if ($_POST['action'] == 'signin'){
-            $username = $_POST['user'];
-            $pwd = $_POST['pwd'];
-
-            require('../dbconfig.php');
-            $sql = "SELECT * FROM users WHERE username='$username'";
-            $result = mysqli_query($conn,$sql);
-            if ($result->num_rows > 0){
-                $hash = (mysqli_fetch_assoc($result))['pwd'];
-                if (password_verify($pwd, $hash)){
-                    $_SESSION['connected'] = true;
-                    $_SESSION['username'] = $username;
-                    header('Location: ../');
-                }
-            } else {
-                $toastContents = json_encode(Array(
-                    'type' => 'error',
-                    'message' => 'Incorrect username/password !',
-                    'complex_message' => 'User entered non-corresponding username-password combination.'
-                ));
-            }
-        }
-    }
-}
-
-
 ?>
 
 
@@ -76,7 +48,7 @@ if (isset($_POST)){
             <p id="please"><?= returnText('please-log-in', $lang, $textData) ?></p>
         </div>
 
-        <form action="./index.php" method="post">
+        <div id="loginform">
             <div id="fields">
                 <div class="text-field">
                     <input type="text" name="user" value="" placeholder=" ">
@@ -89,8 +61,8 @@ if (isset($_POST)){
                     <p class="error-text"></p>
                 </div>
             </div>
-            <button type="submit" value="signin" name="action"><?= returnText('log-in-btn', $lang, $textData) ?></button>
-        </form>
+            <button type="finish" onclick="login()"><?= returnText('log-in-btn', $lang, $textData) ?></button>
+        </div>
     </main>
 
     <div id="language-selector">
@@ -104,10 +76,7 @@ if (isset($_POST)){
 
     <?php 
         include('../modules/toasts/toasts.php');
-        if (isset($toastContents)) :
     ?>
-        <script>showToast(<?= $toastContents ?>)</script>
-    <?php endif; ?>
 
 </body>
 </html>
