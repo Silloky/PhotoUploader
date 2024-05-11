@@ -1,5 +1,5 @@
 {
     "require": {
-        "firebase/php-jwt": "^6.10"
+        "adhocore/jwt": "^1.1"
     }
 }
