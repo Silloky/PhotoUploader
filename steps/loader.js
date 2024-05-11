@@ -14,7 +14,7 @@ if (spinner == 1){
             })
         },5000)
     }).fail(function(jqxhr){
-        if (jqxhr.statusCode == 401){
+        if (jqxhr.status == 401){
             window.location = "/login"
         }
     })
@@ -32,8 +32,8 @@ if (spinner == 1){
                         $("#loader").hide()
                     })
                 }, 3000)
-            }).fail(function(){
-                if (jqxhr.statusCode == 401){
+            }).fail(function(jqxhr){
+                if (jqxhr.status == 401){
                     window.location = "/login"
                 }
             })
@@ -51,8 +51,8 @@ if (spinner == 1){
         $("body").append($(data).hide())
         $("body").children().not("link, script, #toast-hider").show()
         $("#loader").hide()
-    }).fail(function(){
-        if (jqxhr.statusCode == 401){
+    }).fail(function(jqxhr){
+        if (jqxhr.status == 401){
             window.location = "/login"
         }
     })
@@ -64,8 +64,8 @@ if (spinner == 1){
             $("body").append($(data).hide())
             $("body").children().not("link, script, #toast-hider").show()
             $("#loader").hide()
-        }).fail(function(){
-            if (jqxhr.statusCode == 401){
+        }).fail(function(jqxhr){
+            if (jqxhr.status == 401){
                 window.location = "/login"
             }
         })

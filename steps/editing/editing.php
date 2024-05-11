@@ -1,4 +1,11 @@
-<?php $relPath = substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])); ?>
+<?php 
+    $relPath = substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])); 
+
+    require_once($_SERVER['DOCUMENT_ROOT']."/api/auth.php");
+    if (!checkJWT($_COOKIE['jwt'], $jwtKey)['valid']){
+        http_response_code(401);
+    }
+?>
 
 <link rel="stylesheet" href="<?= $relPath . "/editing.css" ?>">
 <script src="<?= $relPath . "/editing.js" ?>" defer></script>

@@ -1,8 +1,8 @@
 <?php
 
 use ReallySimpleJWT\Token;
-require_once('../vendor/autoload.php');
-require_once('../dbconfig.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/dbconfig.php');
 
 function checkJWT($jwt, $jwtKey) {
     if (Token::validate($jwt, $jwtKey)){
@@ -39,7 +39,7 @@ function login($conn, $jwtKey){
             $hash = (mysqli_fetch_assoc($result))['pwd'];
             if (password_verify($pwd, $hash)){
                 $_SESSION['username'] = $username;
-                $exp = 60;
+                $exp = 15;
                 $jwt = Token::create($username, $jwtKey, (time() + $exp), $_SERVER['SERVER_NAME']);
                 $res = Array(
                     'type' => 'token',
