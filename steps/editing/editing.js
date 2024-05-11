@@ -332,6 +332,11 @@ function postFolderCreation(path){
             async: true,
             success: function(res) {
                 resolve(res)
+            },
+            error: function(){
+                if (jqxhr.status == 401){
+                    reauth()
+                }
             }
         })
     })
@@ -370,6 +375,11 @@ function postFolderDeletion(path){
             async: true,
             success: function(res) {
                 resolve(res)
+            },
+            error: function(){
+                if (jqxhr.status == 401){
+                    reauth()
+                }
             }
         })
     })
@@ -449,6 +459,11 @@ async function initTree() {
                 $(this).parent().parent().siblings("ul.nested").hide() // collapses
                 $(this).parent().parent().parent().css('list-style', '\'\\e2c7\  \'') // changes list-style icon to indicate closed folder
             })
+        },
+        error: function(){
+            if (jqxhr.status == 401){
+                reauth()
+            }
         }
     })
 }
@@ -478,6 +493,11 @@ function getSearchResults(query){
             async: true,
             success: function(res) {
                 resolve(res)
+            },
+            error: function(){
+                if (jqxhr.status == 401){
+                    reauth()
+                }
             }
         })
     })
@@ -587,6 +607,11 @@ async function submitNewPlace(lat, lng){
         async: true,
         success: function(res) {
             return res
+        },
+        error: function(){
+            if (jqxhr.status == 401){
+                reauth()
+            }
         }
     })
 

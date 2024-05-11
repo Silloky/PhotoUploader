@@ -1,5 +1,10 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT']."/api/auth.php");
+if (!checkJWT($_COOKIE['jwt'], $jwtKey)['valid']){
+    http_response_code(401);
+}
+
 $path = $_POST['path']; // gets the posted path from browser
 
 $basePath = '/media/'; // base path (where Abums is mounted in the container)
