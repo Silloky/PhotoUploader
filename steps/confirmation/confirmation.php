@@ -17,4 +17,5 @@
 </div>
 <?php
     include('../../modules/toasts/toasts.php');
+    include('../../modules/authModal/authModal.php');
 ?>

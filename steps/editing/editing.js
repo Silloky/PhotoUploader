@@ -333,9 +333,10 @@ function postFolderCreation(path){
             success: function(res) {
                 resolve(res)
             },
-            error: function(jqxhr){
+            error: async function(jqxhr){
                 if (jqxhr.status == 401){
-                    reauth()
+                    await reauth()
+                    $.ajax(this)
                 }
             }
         })
@@ -376,9 +377,10 @@ function postFolderDeletion(path){
             success: function(res) {
                 resolve(res)
             },
-            error: function(jqxhr){
+            error: async function(jqxhr){
                 if (jqxhr.status == 401){
-                    reauth()
+                    await reauth()
+                    $.ajax(this)
                 }
             }
         })
@@ -460,9 +462,10 @@ async function initTree() {
                 $(this).parent().parent().parent().css('list-style', '\'\\e2c7\  \'') // changes list-style icon to indicate closed folder
             })
         },
-        error: function(jqxhr){
+        error: async function(jqxhr){
             if (jqxhr.status == 401){
-                reauth()
+                await reauth()
+                $.ajax(this)
             }
         }
     })
@@ -494,9 +497,10 @@ function getSearchResults(query){
             success: function(res) {
                 resolve(res)
             },
-            error: function(jqxhr){
+            error: async function(jqxhr){
                 if (jqxhr.status == 401){
-                    reauth()
+                    await reauth()
+                    $.ajax(this)
                 }
             }
         })
@@ -608,9 +612,10 @@ async function submitNewPlace(lat, lng){
         success: function(res) {
             return res
         },
-        error: function(jqxhr){
+        error: async function(jqxhr){
             if (jqxhr.status == 401){
-                reauth()
+                await reauth()
+                $.ajax(this)
             }
         }
     })
