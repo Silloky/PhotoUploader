@@ -4,6 +4,13 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
+if (isset($_COOKIE['jwt'])){
+    require_once($_SERVER['DOCUMENT_ROOT']."/api/auth.php");
+    if (checkJWT($_COOKIE['jwt'], $jwtKey)['valid']){
+        header('Location: ../');
+    }
+}
+
 function returnText($sentenceID, $lang, $data){
     foreach ($data as $textElement){
         if ($textElement['sentenceID'] == $sentenceID){
