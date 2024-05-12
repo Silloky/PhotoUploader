@@ -7,6 +7,9 @@ if(session_status() === PHP_SESSION_NONE){
 session_unset();
 session_destroy();
 
+unset($_COOKIE['jwt']);
+setcookie("jwt", "", time()-3600);
+
 header('Content-Type: application/json');
 
 $res = Array(
