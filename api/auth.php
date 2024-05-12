@@ -5,19 +5,26 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/dbconfig.php');
 
 function checkJWT($jwt, $jwtKey) {
-    if (Token::validate($jwt, $jwtKey)){
-        if (Token::validateExpiration($jwt, $jwtKey)){
-            return array(
-                "valid" => true,
-                "code" => ""
-            );
+    try {
+        if (Token::validate($jwt, $jwtKey)){
+            if (Token::validateExpiration($jwt, $jwtKey)){
+                return array(
+                    "valid" => true,
+                    "code" => ""
+                );
+            } else {
+                return array(
+                    "valid" => false,
+                    "code" => "expired"
+                );
+            }
         } else {
             return array(
                 "valid" => false,
-                "code" => "expired"
+                "code" => "badstruct"
             );
         }
-    } else {
+    } catch (Exception $e){
         return array(
             "valid" => false,
             "code" => "badstruct"
