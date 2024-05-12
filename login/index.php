@@ -39,6 +39,9 @@ if (array_key_exists('lang', $_COOKIE)){
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="./login.js" defer></script>
     <script src="../lib/jquery.js"></script>
+    <script>
+        modal=false
+    </script>
 </head>
 <body>
 
