@@ -4,7 +4,7 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
-if ($_ENV['jwtKey'] === null){
+if (array_key_exists('jwtKey', $_ENV)){
     $_ENV['jwtKey'] = openssl_pkey_new();
 }
 

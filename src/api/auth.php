@@ -4,7 +4,7 @@ use ReallySimpleJWT\Token;
 require_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PWD'], $_ENV['DB_NAME']);
 
-if ($_ENV['jwtKey'] === null) {
+if (array_key_exists('jwtKey', $_ENV)) {
     $_ENV['jwtKey'] = openssl_pkey_new();
 }
 

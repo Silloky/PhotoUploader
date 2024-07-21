@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  photouploader-apache:
+    container_name: photouploader-apache
+    image: silloky/photouploader
+    depends_on:
+      - photouploader-db
+    volumes:
+      - /srv/mergerfs/storage/media/Albums:/media:rw
+    ports:
+      - 50016:80
+    restart: unless-stopped
+    environment:
+      DB_HOST: photouploader-db
+      DB_USER: php
+      DB_PWD: photouploader
+      DB_NAME: photouploader
+  photouploader-db:
+    container_name: photouploader-db
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: php
+      MYSQL_PASSWORD: photouploader
+      MYSQL_DATABASE: photouploader
+    ports:
+      - "9906:3306"
+    volumes:
+      - ./dbdata:/var/lib/mysql 
