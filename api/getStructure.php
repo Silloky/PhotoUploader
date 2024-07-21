@@ -1,5 +1,10 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT']."/api/auth.php");
+if (!isset($_COOKIE['jwt']) || !checkJWT($_COOKIE['jwt'], $jwtKey)['valid']){
+    http_response_code(401);
+}
+
 function getContents($path) {
     $contents = array_diff(scandir($path, SCANDIR_SORT_ASCENDING), array('..', '.')); // scans the directory (ls) and excluded Linux '.' and '..'
     $filtered = array();

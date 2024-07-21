@@ -108,3 +108,7 @@ body {
         transform: rotate(1turn);
     }
 }
+
+.blur {
+    filter: blur(10px)
+}

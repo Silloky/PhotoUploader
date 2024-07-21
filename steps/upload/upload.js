@@ -48,6 +48,12 @@ async function uploadPhoto(photo){
             } else if (res.type = 'success'){
                 processPhoto(photo.uuid)
             }
+        },
+        error: async function(jqxhr){
+            if (jqxhr.status == 401){
+                await reauth()
+                $.ajax(this)
+            }
         }
     })
 }

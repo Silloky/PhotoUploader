@@ -1,4 +1,10 @@
 <?php
+
+require_once($_SERVER['DOCUMENT_ROOT']."/api/auth.php");
+if (!isset($_COOKIE['jwt']) || !checkJWT($_COOKIE['jwt'], $jwtKey)['valid']){
+    http_response_code(401);
+}
+
 ini_set('display_errors', 1);
 
 if(session_status() === PHP_SESSION_NONE){
