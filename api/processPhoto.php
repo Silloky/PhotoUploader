@@ -72,7 +72,7 @@ try {
         ));
         echo "data: {$response}\n\n";
         flush();
-        require('../dbconfig.php');
+        $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PWD'], $_ENV['DB_NAME']);
         $sql = "SELECT * FROM places WHERE id = '{$photo['gpsLocation']}'";
         $result = mysqli_query($conn,$sql);
         $place = mysqli_fetch_assoc($result);

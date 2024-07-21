@@ -4,6 +4,10 @@ if(session_status() === PHP_SESSION_NONE){
     session_start();
 }
 
+if ($_ENV['jwtKey'] === null){
+    $_ENV['jwtKey'] = openssl_pkey_new();
+}
+
 if (!(array_key_exists('step', $_SESSION))){
     $_SESSION['step'] = 'editing';
 }

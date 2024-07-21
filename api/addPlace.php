@@ -49,7 +49,7 @@ if ($placeInfo['placeNameFR'] == ''){
 
 if (!isset($res)){
     $sql = "INSERT INTO places (id, name_en, name_fr, address, latitude, longitude, altitude) VALUES (\"" . $placeInfo['placeid'] . "\", \"" . $placeInfo['placeNameEN'] . "\", \"" . $placeInfo['placeNameFR'] . "\", \"" . $placeInfo['address'] . "\", \"" . $placeInfo['latitude'] . "\", \"" . $placeInfo['longitude'] . "\", \"" . $placeInfo['altitude'] . "\")";
-    require('../dbconfig.php');
+    $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PWD'], $_ENV['DB_NAME']);
     if ($conn->query($sql) === TRUE){
         $res = Array(
             'type' => 'success',
