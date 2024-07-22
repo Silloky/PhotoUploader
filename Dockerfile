@@ -10,8 +10,8 @@ RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 RUN apt-get update && \
     apt-get install -y exiftool
 
-COPY ./apache.conf /etc/apache2/apache2.conf
-COPY ./php.ini /usr/local/etc/php/php.ini-production
-COPY ./entry.sh /entry.sh
+COPY ./docker/apache/apache.conf /etc/apache2/apache2.conf
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini-production
+COPY ./docker/entry.sh /entry.sh
 
 ENTRYPOINT ["/entry.sh"]
