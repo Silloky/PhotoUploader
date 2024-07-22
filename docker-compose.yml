@@ -28,3 +28,12 @@ services:
       - "9906:3306"
     volumes:
       - ./dbdata:/var/lib/mysql 
+  # photouploader-phpmyadmin:
+  #   image: arm64v8/phpmyadmin
+  #   ports:
+  #       - '50017:80'
+  #   restart: unless-stopped
+  #   environment:
+  #       PMA_HOST: photouploader-db
+  #   depends_on:
+  #       - photouploader-db
