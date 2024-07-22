@@ -2,7 +2,7 @@ version: "3.8"
 services:
   photouploader-apache:
     container_name: photouploader-apache
-    image: silloky/photouploader
+    image: <username>/photouploader
     depends_on:
       - photouploader-db
     volumes:
