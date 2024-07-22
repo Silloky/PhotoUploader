@@ -11,6 +11,7 @@
 <script src="<?= $relPath . "/editing.js" ?>" defer></script>
 <script src="<?= $relPath . "/../../lib/multiselector.min.js" ?>"></script>
 <script src="<?= $relPath . "/../../lib/datepicker.js" ?>"></script>
+<script lang="js">var geoapifyKey='<?= $_ENV['GEOAPIFY_KEY'] ?>';</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <link rel="stylesheet" href="<?= $relPath . "/../../lib/datepicker.css" ?>">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>

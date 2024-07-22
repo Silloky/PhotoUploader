@@ -718,7 +718,6 @@ var nullEditor = true
 var previousResults = []
 var mapLoaded = false
 var mapMarker
-var geoapifyKey = 'fe163ddccd36422baea56b816c3af0b6'
 var logoutCount = 0
 // inits variables
 

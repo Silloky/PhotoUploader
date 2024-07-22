@@ -16,6 +16,7 @@ services:
       DB_USER: php
       DB_PWD: photouploader
       DB_NAME: photouploader
+      GEOAPIFY_KEY: <get yours at https://www.geoapify.com/>
   photouploader-db:
     container_name: photouploader-db
     image: mysql

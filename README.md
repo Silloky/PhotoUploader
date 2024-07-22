@@ -38,6 +38,7 @@ services:
       DB_USER: php
       DB_PWD: photouploader
       DB_NAME: photouploader
+      GEOAPIFY_KEY: <key> # Get yours at https://www.geoapify.com> ! It's free up to 3000 requests a day (more than enough)
   photouploader-db:
     container_name: photouploader-db
     image: mysql
@@ -62,11 +63,11 @@ To build the webapp yourself, please do the following steps :
 1. `git clone https://github.com/Silloky/PhotoUploader`
 2. `cd PhotoUploader`
 3. `docker build -t <yourusername> .`
-4. `cp ./docker/docker-compose.dev.example.yml ./docker-compose.yml`
-5. Customise the values in the `docker-compose` to fit your needs
+4. `cp ./docker/docker-compose.prod.example.yml ./docker-compose.yml`
+5. Customise the values in the `docker-compose.yml` to fit your needs
 6. `docker-compose up -d`
 
-Now if you edit the code in `/src` and reload the page, you'll see your edits !
+If you edit the code in `/src` and want to see your edits without rebuilding, use the `dev` example instead of `prod`. Reload the page, and you'll see your edits !
 
 ## Contributing
 
