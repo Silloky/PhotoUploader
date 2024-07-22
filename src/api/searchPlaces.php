@@ -14,7 +14,7 @@ if ($query == "*") {
     $sql = "SELECT * FROM places WHERE MATCH(`name_en`,`name_fr`,`address`) AGAINST ('$search' IN BOOLEAN MODE)";
 }
 
-require('../dbconfig.php');
+$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PWD'], $_ENV['DB_NAME']);
 $result = mysqli_query($conn,$sql);
 
 // echo highlight_string("<?php\n" . json_encode(mysqli_fetch_all($result, MYSQLI_ASSOC), JSON_PRETTY_PRINT) . "\n;

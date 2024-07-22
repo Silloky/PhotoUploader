@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  photouploader-apache:
+    container_name: photouploader-apache
+    image: <username>/photouploader
+    depends_on:
+      - photouploader-db
+    volumes:
+      - /path/to/the/src/dir/:/var/www/html
+      - /path/to/the/media/destination/folder/:/media:rw
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    environment:
+      DB_HOST: photouploader-db
+      DB_USER: php
+      DB_PWD: photouploader
+      DB_NAME: photouploader
+  photouploader-db:
+    container_name: photouploader-db
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: php
+      MYSQL_PASSWORD: photouploader
+      MYSQL_DATABASE: photouploader
+    ports:
+      - "9906:3306"
+    volumes:
+      - /path/to/persistent/mysql/db/:/var/lib/mysql 
+  photouploader-phpmyadmin:
+    image: phpmyadmin
+    ports:
+        - '50017:80'
+    restart: unless-stopped
+    environment:
+        PMA_HOST: photouploader-db
+    depends_on:
+        - photouploader-db
