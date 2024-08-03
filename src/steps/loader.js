@@ -2,6 +2,10 @@ if (sessionStorage.getItem('step') == null){
     sessionStorage.setItem('step', 'editing')
 }
 
+if (localStorage.getItem('spinner') == null){
+    localStorage.setItem('spinner', 1)
+}
+
 async function cookieWatcher() {
     return await new Promise(resolve => {
         var lastCookie = document.cookie
